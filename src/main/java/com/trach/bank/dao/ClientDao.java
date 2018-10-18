@@ -4,7 +4,7 @@ import com.trach.bank.model.Client;
 
 import java.util.List;
 
-interface ClientDao {
+public interface ClientDao {
     List<Client> findAll();
     Client findById(long id);
     void save(Client client);

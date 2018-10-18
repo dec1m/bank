@@ -24,7 +24,7 @@ public class ClientDaoHibernate_Test {
 
    @BeforeClass
     public static void setUp(){
-       context.load("app-config.xml");
+       context.load("root-config.xml");
        context.load("db/test/dao-test.xml");
        context.refresh();
 

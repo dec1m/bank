@@ -6,7 +6,9 @@
 </head>
 <body>
 <center>
-<h2>TEST</h2>
+<h2>INDEX</h2>
+    <h3><a href="/clients">Clients List</a></h3>
 </center>
+
 </body>
 </html>
