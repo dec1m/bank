@@ -33,7 +33,7 @@ public class ClientDaoHibernate_Test {
 
        for(int i = 0; i < COUNT_CLIENTS_IN_DB; i++){
            Client client  = new Client();
-           client.setBirthDay(LocalDate.of(2018,10,9));
+           client.setBirthDay(LocalDate.of(1994,7,31));
            client.setPhone_number(11  * i);
            client.setPassword("hibernate_pass_" + i);
            client.setFirstName("hibernate_testFN_" + i);
@@ -136,6 +136,7 @@ public class ClientDaoHibernate_Test {
         assertNotEquals(client1,client2);
         assertNotEquals(client1.getId(),client2.getId());
     }
+
 
 }
 

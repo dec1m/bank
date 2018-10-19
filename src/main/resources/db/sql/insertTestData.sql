@@ -3,7 +3,7 @@ INSERT INTO clients  (id,first_name,last_name,password,birth_day,phone_number) V
 INSERT INTO clients  (id,first_name,last_name,password,birth_day,phone_number) VALUES
   (2,'Filip','Yakubovich,','gfvewrtvw','1394-11-12',43105654);
 INSERT INTO clients  (id,first_name,last_name,password,birth_day,phone_number) VALUES
-  (3,'Ura','Dolgii,','123','1963-01-19',56703386);
+  (3,'Ura','Dolgii,','123','1963-01-31',56703386);
 INSERT INTO clients  (id,first_name,last_name,password,birth_day,phone_number) VALUES
   (4,'Piotr','Trach,','324564','1967-09-20',4041202);
 INSERT INTO clients  (id,first_name,last_name,password,birth_day,phone_number) VALUES

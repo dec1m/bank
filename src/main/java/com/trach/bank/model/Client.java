@@ -1,7 +1,10 @@
 package com.trach.bank.model;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.JDBCType;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
@@ -114,6 +117,10 @@ public class Client  implements Serializable {
         this.accountList = accountList;
     }
 
+    public void setBirthDay(String stringDate){
+        this.birthDay = LocalDate.parse(stringDate);
+
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -124,7 +131,9 @@ public class Client  implements Serializable {
                 Objects.equals(firstName, client.firstName) &&
                 Objects.equals(lastName, client.lastName) &&
                 Objects.equals(password, client.password) &&
-                Objects.equals(birthDay, client.birthDay);
+                Objects.equals(birthDay.getDayOfMonth(), client.birthDay.getDayOfMonth()) &&
+                Objects.equals(birthDay.getMonth(), client.birthDay.getMonth()) &&
+                Objects.equals(birthDay.getYear(), client.birthDay.getYear());
     }
 
     @Override

@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8"/>
-    <title>Clients List</title>
+    <meta charset="UTF-8">
+    <title>Info</title>
+
 </head>
 <body>
-<h3>Client List</h3>
+<h1>Client Info</h1>
 <br/>
 <table>
     <tr>
@@ -16,7 +17,6 @@
         <th>Birth Day</th>
     </tr>
 
-<#list clients as client>
   <tr>
       <td><a href="client/${client.id}">${client.id}</a></td>
       <td>${client.firstName}</td>
@@ -25,7 +25,6 @@
       <td>${client.birthDay}</td>
   </tr>
 
-</#list>
 </table>
 </body>
 </html>
