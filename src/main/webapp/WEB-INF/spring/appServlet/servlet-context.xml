@@ -17,22 +17,36 @@ http://www.springframework.org/schema/mvc ">
     <annotation-driven/>
 
 
-    <resources location="/web-resources" mapping="/resources/**"/>
+    <resources location="/, classpath:/META-INF/web-resources/" mapping="/resources/**"/>
 
     <default-servlet-handler/>
-
+    <context:component-scan base-package="com.trach.bank"/>
     <beans:bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
         <beans:property name="order" value="1"/>
         <beans:property name="prefix" value=""/>
         <beans:property name="suffix" value=".ftl"/>
+        <beans:property name="contentType" value="text/html;charset=UTF-8"/>
 
     </beans:bean>
 
-    <beans:bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+
+       <beans:bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
         <beans:property name="templateLoaderPath" value="WEB-INF/pages"/>
     </beans:bean>
 
-    <context:component-scan base-package="com.trach.bank.controllers"/>
+    <interceptors>
+
+        <beans:bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor"
+                    p:paramName="lang"/>
+    </interceptors>
+
+
+    <beans:bean class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
+                id="messageSource" p:basenames="WEB-INF/i18n/messages, WEB-INF/i18n/application"
+                p:fallbackToSystemLocale="false"
+                p:defaultEncoding="UTF-8"/>
+    <beans:bean class="org.springframework.web.servlet.i18n.CookieLocaleResolver"
+                id="localeResolver" p:cookieName="locale"/>
 
 
 

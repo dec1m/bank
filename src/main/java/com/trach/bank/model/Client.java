@@ -1,10 +1,7 @@
 package com.trach.bank.model;
 
-import org.hibernate.annotations.Type;
-
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.JDBCType;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;

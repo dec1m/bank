@@ -1,23 +1,25 @@
+<#import "/spring.ftl" as spring/>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8"/>
-    <title>Register</title>
+    <title><@spring.message "label_register"/></title>
 
 </head>
 <body>
+<h2><@spring.message "label_register"/></h2>
 <form name="client" action="/register" method="post">
-    <p>First Name</p>
-     <input title="First Name" type="text" name="firstName">
-    <p>Last Name</p>
-    <input title="Last Name" type="text" name="lastName">
-    <p>Password</p>
-    <input title="Password" type="password" name="password">
-    <p>Phone Number</p>
-    <input title="Phone Number" type="text" name="phone_number">
-    <p>Birth Day</p>
-    <input title="Birth Day" type="text"   name="birthDay">
-    <input type="submit" value="Register">
+    <p><@spring.message "label_first_name"/></p>
+     <input title="<@spring.message "label_first_name"/>" type="text" name="firstName">
+    <p><@spring.message "label_last_name"/></p>
+    <input title="<@spring.message "label_last_name"/>" type="text" name="lastName">
+    <p><@spring.message "label_password"/></p>
+    <input title="<@spring.message "label_password"/>" type="password" name="password">
+    <p><@spring.message "label_phone_number"/></p>
+    <input title="<@spring.message "label_phone_number"/>" type="text" name="phone_number">
+    <p><@spring.message "label_birth_day"/></p>
+    <input title="<@spring.message "label_birth_day"/>" type="text"   name="birthDay">
+    <input type="submit" value="<@spring.message "label_register"/>"/>
 </form>
 
 

@@ -45,8 +45,10 @@ public class ClientDaoHibernate implements ClientDao  {
 
     @Override
     public void update(Client client) {
-             save(client);
-             //todo  redact interface and JDBC rel.
+        sessionFactory
+                .getCurrentSession()
+                .update(client);
+
     }
 
 

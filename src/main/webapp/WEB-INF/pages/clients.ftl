@@ -1,19 +1,21 @@
+<#import "/spring.ftl" as spring/>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8"/>
-    <title>Clients List</title>
+    <title><@spring.message "label_client_list"/></title>
 </head>
 <body>
-<h3>Client List</h3>
+<h3><@spring.message "label_client_list"/></h3>
 <br/>
 <table>
     <tr>
-        <th>ID</th>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Phone Number</th>
-        <th>Birth Day</th>
+        <th><@spring.message "label_id"/></th>
+        <th><@spring.message "label_first_name"/></th>
+        <th><@spring.message "label_last_name"/></th>
+        <th><@spring.message "label_phone_number"/></th>
+        <th><@spring.message "label_birth_day"/></th>
+
     </tr>
 
 <#list clients as client>
@@ -23,9 +25,14 @@
       <td>${client.lastName}</td>
       <td>${client.phone_number}</td>
       <td>${client.birthDay}</td>
+      <td><a href="/update/${client.id}"><@spring.message "label_update"/></a></td>
+     <td><a href="/delete/${client.id}"> <@spring.message "label_delete"/></a></td>
+
   </tr>
+
 
 </#list>
 </table>
+<a href="/register"><@spring.message "label_register"/></a>
 </body>
 </html>

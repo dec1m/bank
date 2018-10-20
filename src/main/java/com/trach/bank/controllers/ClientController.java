@@ -14,7 +14,7 @@ import java.time.LocalDate;
 
 @Controller
 
-public class ClientController {
+public class  ClientController {
 
    private ClientService clientService;
 
@@ -40,7 +40,7 @@ public class ClientController {
     }
 
     @RequestMapping(value = "/clients")
-    public String getAllUser(Model model){
+    public String getAllClients(Model model){
          model.addAttribute("clients",clientService.findAll());
         return "clients";
 
@@ -53,23 +53,47 @@ public class ClientController {
     }
     @RequestMapping(value = "/register",method = RequestMethod.GET)
     public String registerClientPage(){
-
         return "register";
     }
 
-
-
     @PostMapping("/register")
-    public String create(Client client, BindingResult bindingResult) {
-        System.out.println(client);
-
+    public String registerClient(Client client, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "/register";
         }
-
         clientService.save(client);
         return "redirect:/clients";
     }
 
+    @GetMapping("/delete/{id}")
+    public String deleteClient(@PathVariable("id") long id){
+        clientService.deleteById(id);
+        return "redirect:/clients";
+    }
+    @GetMapping("update/{id}")
+    public String updateClient(@PathVariable("id") long id,Model model){
+        Client client = clientService.findById(id);
+        model.addAttribute("client", client);
+        return "editClient";
+
+
+    }
+    @PostMapping("/update")
+    public String updateClient(Client client, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "/update/"+ client.getId();
+        }
+        System.out.println(client);
+        clientService.update(client);
+        return "redirect:/client/" + client.getId();
+    }
+
+
+    @RequestMapping("/show/{id}")
+    public String showJspx( @PathVariable("id") long id, Model model){
+        model.addAttribute("client",clientService.findById(id));
+        return "show";
+
+    }
 
 }
