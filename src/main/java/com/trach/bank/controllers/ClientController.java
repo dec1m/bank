@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
 
 @Controller
@@ -36,28 +37,29 @@ public class  ClientController {
 
     @RequestMapping(value = "/",method = RequestMethod.GET)
     public String test(){
-        return "index";
+        return "/index";
     }
 
     @RequestMapping(value = "/clients")
     public String getAllClients(Model model){
          model.addAttribute("clients",clientService.findAll());
-        return "clients";
+        return "/clients";
 
     }
     @RequestMapping("/client/{id}")
     public String showClient( @PathVariable("id") long id, Model model){
         model.addAttribute("client",clientService.findById(id));
-        return "client";
+        return "/client";
 
     }
     @RequestMapping(value = "/register",method = RequestMethod.GET)
-    public String registerClientPage(){
-        return "register";
+    public String registerClientPage(Model model){
+        model.addAttribute("client",new Client());
+        return "/register";
     }
 
     @PostMapping("/register")
-    public String registerClient(Client client, BindingResult bindingResult) {
+    public String registerClient(@ModelAttribute @Valid  Client client, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "/register";
         }
@@ -73,13 +75,13 @@ public class  ClientController {
     @GetMapping("update/{id}")
     public String updateClient(@PathVariable("id") long id,Model model){
         Client client = clientService.findById(id);
-        model.addAttribute("client", client);
-        return "editClient";
+        model.addAttribute("client",  client);
+        return "/editClient";
 
 
     }
     @PostMapping("/update")
-    public String updateClient(Client client, BindingResult bindingResult) {
+    public String updateClient(@Valid  @ModelAttribute Client client, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "/update/"+ client.getId();
         }
@@ -89,11 +91,6 @@ public class  ClientController {
     }
 
 
-    @RequestMapping("/show/{id}")
-    public String showJspx( @PathVariable("id") long id, Model model){
-        model.addAttribute("client",clientService.findById(id));
-        return "show";
 
-    }
 
 }

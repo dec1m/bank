@@ -7,7 +7,9 @@
 
 </head>
 <body>
+
 <h2><@spring.message "label_update"/></h2>
+
 <form name="client" action="/update" method="post">
     <p><@spring.message "label_id"/></p>
     <input title="<@spring.message "label_id"/>"  type="text" name="id" value="${client.id}"  >

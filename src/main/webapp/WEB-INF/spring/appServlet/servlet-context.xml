@@ -14,7 +14,7 @@
 
 http://www.springframework.org/schema/mvc ">
 
-    <annotation-driven/>
+    <annotation-driven validator="validator"/>
 
 
     <resources location="/, classpath:/META-INF/web-resources/" mapping="/resources/**"/>
@@ -25,6 +25,7 @@ http://www.springframework.org/schema/mvc ">
         <beans:property name="order" value="1"/>
         <beans:property name="prefix" value=""/>
         <beans:property name="suffix" value=".ftl"/>
+        <beans:property name="exposeSpringMacroHelpers" value="true"/>
         <beans:property name="contentType" value="text/html;charset=UTF-8"/>
 
     </beans:bean>
@@ -42,12 +43,15 @@ http://www.springframework.org/schema/mvc ">
 
 
     <beans:bean class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
-                id="messageSource" p:basenames="WEB-INF/i18n/messages, WEB-INF/i18n/application"
+                id="messageSource" p:basenames="WEB-INF/i18n/messages, WEB-INF/i18n/application, WEB-INF/i18n/ValidationMessages"
                 p:fallbackToSystemLocale="false"
                 p:defaultEncoding="UTF-8"/>
     <beans:bean class="org.springframework.web.servlet.i18n.CookieLocaleResolver"
                 id="localeResolver" p:cookieName="locale"/>
 
+    <beans:bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+        <beans:property name="validationMessageSource" ref="messageSource"/>
+    </beans:bean>
 
 
 </beans:beans>

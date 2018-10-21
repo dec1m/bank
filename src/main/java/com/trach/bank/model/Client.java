@@ -1,6 +1,7 @@
 package com.trach.bank.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
@@ -17,11 +18,20 @@ import java.util.Objects;
 })
 
 public class Client  implements Serializable {
+    @NotNull
     private long id;
+    @NotNull
+    @Size(min = 2,max = 15 ,message = "{firstName.size.error}")
     private String firstName;
+    @NotNull
+    @Size(min = 2,max = 15,message = "{lastName.size.error}")
     private String lastName;
+    @Size(min = 6,max = 32,message = "{password.size.error}")
     private String password;
+    @Min(value = 10000,message = "{phone_number.size.error}")
+    @Max(value = 999999999,message = "{phone_number.size.error}")
     private int phone_number;
+    @NotNull
     private LocalDate birthDay;
     private List<Account> accountList;
 
@@ -69,9 +79,11 @@ public class Client  implements Serializable {
         return firstName;
     }
 
+
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
+
     @Column(name = "last_name")
     public String getLastName() {
         return lastName;

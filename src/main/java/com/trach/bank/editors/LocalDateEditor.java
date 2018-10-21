@@ -17,6 +17,9 @@ public  class LocalDateEditor extends PropertyEditorSupport {
     @Override
     public String getAsText() {
         LocalDate value = (LocalDate) getValue();
+        if(value == null){
+            return "1111-11-11";//TODO
+        }
        return value.toString();
     }
 }
