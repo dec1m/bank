@@ -26,7 +26,11 @@
         <@sf.input path="lastName" />
         <@sf.errors path="lastName" />
   </div>
-
+  <div>
+        <@sf.label path"login"><@spring.message "label_login"/></@sf.label>
+        <@sf.input path="login"  />
+        <@sf.errors path="login" />
+  </div>
   <div>
         <@sf.label path"password"><@spring.message "label_password"/></@sf.label>
         <@sf.input path="password"  />
@@ -46,26 +50,7 @@
   </div>
 <input type="submit" value="<@spring.message "label_register"/>"/>
 </@sf.form>
-<#--<form name="client" action="/register" method="post">-->
-    <#--<p><@spring.message "label_first_name"/></p>-->
-     <#--<input title="<@spring.message "label_first_name"/>" type="text" name="firstName">-->
-    <#--<p><@spring.message "label_last_name"/></p>-->
-    <#--<input title="<@spring.message "label_last_name"/>" type="text" name="lastName">-->
-    <#--<p><@spring.message "label_password"/></p>-->
-    <#--<input title="<@spring.message "label_password"/>" type="password" name="password">-->
-    <#--<p><@spring.message "label_phone_number"/></p>-->
-    <#--<input title="<@spring.message "label_phone_number"/>" type="text" name="phone_number">-->
-    <#--<p><@spring.message "label_birth_day"/></p>-->
-    <#--<input title="<@spring.message "label_birth_day"/>" type="text"   name="birthDay">-->
 
-
-    <#--<input type="submit" value="<@spring.message "label_register"/>"/>-->
-
-
-
-
-
-<#--</form>-->
 
 
 </body>

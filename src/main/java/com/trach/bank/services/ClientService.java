@@ -52,4 +52,8 @@ public class ClientService {
     public void deleteById(long id) {
         clientDao.deleteById(id);
     }
+
+    public Client getByLogin(String login){
+       return clientDao.getByLogin(login);
+    }
 }

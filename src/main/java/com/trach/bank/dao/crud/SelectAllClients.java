@@ -7,9 +7,9 @@ import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-        public class SelectAllClients extends MappingSqlQuery<Client>  {
+public class SelectAllClients extends MappingSqlQuery<Client>  {
             private  final CustomerRowMapper customerRowMapper = new CustomerRowMapper();
-            private static final String sql = "SELECT id, first_name, last_name, password, phone_number , birth_day " +
+            private static final String sql = "SELECT id, first_name, last_name, password,email, phone_number , birth_day " +
                     " FROM clients";
 
             public SelectAllClients(DataSource dataSource) {

@@ -11,8 +11,7 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/security
-
-http://www.springframework.org/schema/mvc ">
+        http://www.springframework.org/schema/mvc ">
 
     <annotation-driven validator="validator"/>
 
@@ -43,7 +42,7 @@ http://www.springframework.org/schema/mvc ">
 
 
     <beans:bean class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
-                id="messageSource" p:basenames="WEB-INF/i18n/messages, WEB-INF/i18n/application, WEB-INF/i18n/ValidationMessages"
+                id="messageSource" p:basenames="WEB-INF/i18n/messages,WEB-INF/i18n/authority, WEB-INF/i18n/application, WEB-INF/i18n/ValidationMessages"
                 p:fallbackToSystemLocale="false"
                 p:defaultEncoding="UTF-8"/>
     <beans:bean class="org.springframework.web.servlet.i18n.CookieLocaleResolver"

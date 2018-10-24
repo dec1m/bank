@@ -3,6 +3,8 @@ CREATE TABLE clients (
   first_name  VARCHAR(45),
   last_name   VARCHAR (45),
   password    VARCHAR (45),
+  login    VARCHAR (45),
+  role    VARCHAR (45),
   birth_day   DATE ,
   phone_number INTEGER
 

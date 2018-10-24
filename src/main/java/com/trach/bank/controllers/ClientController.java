@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 
@@ -75,7 +77,12 @@ public class  ClientController {
     @GetMapping("update/{id}")
     public String updateClient(@PathVariable("id") long id,Model model){
         Client client = clientService.findById(id);
+        Map<String,String> role = new HashMap<>();
+        role.put("User","ROLE_USER");
+        role.put("Admin","ROLE_ADMIN");
+        role.put("Anonymous","ROLE_ANONYMOUS");
         model.addAttribute("client",  client);
+        model.addAttribute(role);
         return "/editClient";
 
 
@@ -85,8 +92,7 @@ public class  ClientController {
         if (bindingResult.hasErrors()) {
             return "/update/"+ client.getId();
         }
-        System.out.println(client);
-        clientService.update(client);
+          clientService.update(client);
         return "redirect:/client/" + client.getId();
     }
 

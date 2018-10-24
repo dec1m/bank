@@ -18,7 +18,25 @@
     <p><@spring.message "label_last_name"/></p>
     <input title="<@spring.message "label_last_name"/>" type="text" name="lastName" value="${client.lastName}">
     <p><@spring.message "label_password"/></p>
-    <input title="<@spring.message "label_password"/>" type="password" name="password" value="${client.password}">
+    <input title="<@spring.message "label_password"/>" type="text" name="password" value="${client.password}">
+    <p><@spring.message "label_login"/></p>
+    <input title="<@spring.message "label_login"/>" type="text" name="login" value="${client.login}">
+
+    <#--<p><@spring.message "label_authority"/></p>-->
+    <#--<input title="<@spring.message "label_authority"/>" type="text" name="role" value="${client.role}">-->
+
+
+    <p><@spring.message "label_authority"/></p>
+
+    <select   name="role"   size="1" >
+        <option  value="<@spring.message "admin"/>"><@spring.message "label_admin"/></option>
+        <option  selected value="<@spring.message "user"/>"><@spring.message "label_user"/></option>
+        <option value="<@spring.message "anonymous"/>"><@spring.message "label_anonymous"/></option>
+    </select>
+
+
+
+
     <p><@spring.message "label_phone_number"/></p>
     <input title="<@spring.message "label_phone_number"/>" type="text" name="phone_number" value="${client.phone_number}">
     <p><@spring.message "label_birth_day"/></p>

@@ -14,6 +14,7 @@ public class CustomerRowMapper  implements RowMapper {
         client.setFirstName(resultSet.getString("first_name"));
         client.setLastName(resultSet.getString("last_name"));
         client.setPassword(resultSet.getString("password"));
+        client.setLogin(resultSet.getString("login"));
         client.setPhone_number(resultSet.getInt("phone_number"));
         client.setBirthDay(resultSet.getDate("birth_day").toLocalDate());
         return client;

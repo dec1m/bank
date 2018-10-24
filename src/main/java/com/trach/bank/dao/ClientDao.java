@@ -12,4 +12,5 @@ public interface ClientDao {
     void update(Client client);
     void delete(Client client);
     void deleteById(long id);
+    Client getByLogin(String login);
 }

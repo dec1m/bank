@@ -14,27 +14,37 @@ import java.util.Objects;
         @NamedQuery(name= Client.GET_LAST_NAME_BY_ID, query = "SELECT c.firstName FROM Client c WHERE id = :id"),
         @NamedQuery(name= Client.DELETE_BY_ID, query = "DELETE FROM Client c WHERE c.id = :id"),
         @NamedQuery(name= Client.FIND_ALL, query = "SELECT c FROM Client c"),
-        @NamedQuery(name= Client.GET_BY_ID, query = "SELECT c FROM Client c WHERE c.id = :id")
+        @NamedQuery(name= Client.GET_BY_ID, query = "SELECT c FROM Client c WHERE c.id = :id"),
+        @NamedQuery(name= Client.GET_BY_LOGIN, query = "SELECT c FROM Client c WHERE c.login = :login")
 })
 
 public class Client  implements Serializable {
     @NotNull
     private long id;
     @NotNull
-    @Size(min = 2,max = 15 ,message = "{firstName.size.error}")
+    @Size(min = 2, max = 15, message = "{firstName.size.error}")
     private String firstName;
     @NotNull
-    @Size(min = 2,max = 15,message = "{lastName.size.error}")
+    @Size(min = 2, max = 15, message = "{lastName.size.error}")
     private String lastName;
-    @Size(min = 6,max = 32,message = "{password.size.error}")
+    @Size(min = 6, max = 32, message = "{password.size.error}")
     private String password;
-    @Min(value = 10000,message = "{phone_number.size.error}")
-    @Max(value = 999999999,message = "{phone_number.size.error}")
+    @Min(value = 10000, message = "{phone_number.size.error}")
+    @Max(value = 999999999, message = "{phone_number.size.error}")
     private int phone_number;
     @NotNull
     private LocalDate birthDay;
+
+    @NotNull
+    @Column(name = "login")
+    @Size(min = 4, max = 15, message = "{error_login}")
+    private String login;
+    @NotNull
+    @Size(min = 5, max = 20)
+    private String role = "ROLE_USER"; //TODO, default value
     private List<Account> accountList;
 
+    public static final String GET_BY_LOGIN = "CLIENT.GET_BY_LOGIN";
     public static final String GET_BY_ID = "CLIENT.GET_BY_ID";
     public static final String FIND_ALL = "CLIENT.FIND_ALL";
     public static final String DELETE_BY_ID = "CLIENT.DELETE_BY_ID";
@@ -43,7 +53,7 @@ public class Client  implements Serializable {
     public Client() {
     }
 
-    public Client(String firstName, String lastName, String password, int phone_number,
+    public Client(String firstName, String lastName, String password, int phone_number, String login,
                   LocalDate birthDay, List<Account> accountList) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -54,7 +64,7 @@ public class Client  implements Serializable {
     }
 
     public Client(long id, String firstName, String lastName,
-                  String password, int phone_number, LocalDate birthDay, List<Account> accountList) {
+                  String password, int phone_number, LocalDate birthDay, String login, List<Account> accountList) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -74,6 +84,7 @@ public class Client  implements Serializable {
     public void setId(long id) {
         this.id = id;
     }
+
     @Column(name = "first_name")
     public String getFirstName() {
         return firstName;
@@ -92,6 +103,7 @@ public class Client  implements Serializable {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
     @Column(name = "password")
     public String getPassword() {
         return password;
@@ -100,6 +112,7 @@ public class Client  implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+
     @Column(name = "phone_number")
     public int getPhone_number() {
         return phone_number;
@@ -108,6 +121,7 @@ public class Client  implements Serializable {
     public void setPhone_number(int phone_number) {
         this.phone_number = phone_number;
     }
+
     @Column(name = "birth_day")
     public LocalDate getBirthDay() {
         return birthDay;
@@ -117,7 +131,16 @@ public class Client  implements Serializable {
         this.birthDay = birthDay;
     }
 
-    @OneToMany(mappedBy = "client",cascade = CascadeType.ALL,orphanRemoval = true)
+    @Column(name = "role")
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
     public List<Account> getAccountList() {
         return accountList;
     }
@@ -126,10 +149,19 @@ public class Client  implements Serializable {
         this.accountList = accountList;
     }
 
-    public void setBirthDay(String stringDate){
+    public void setBirthDay(String stringDate) {
         this.birthDay = LocalDate.parse(stringDate);
 
     }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -155,12 +187,13 @@ public class Client  implements Serializable {
     public String toString() {
         return "Client{" +
                 "id=" + id +
-                ", firstName= '" + firstName + '\'' +
-                ", lastName= '" + lastName + '\'' +
-                ", password= '" + password + '\'' +
-                ", phone_number= " + phone_number +
-                ", birthDay= " + birthDay +
-
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", password='" + password + '\'' +
+                ", phone_number=" + phone_number +
+                ", birthDay=" + birthDay +
+                ", login='" + login + '\'' +
+                ", role='" + role + '\'' +
                 '}';
     }
 }

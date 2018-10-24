@@ -71,6 +71,16 @@ public class ClientDaoHibernate implements ClientDao  {
 
     }
 
+    @Override
+    public Client getByLogin(String login) {
+       return sessionFactory
+                .getCurrentSession()
+                .createNamedQuery(Client.GET_BY_LOGIN,Client.class)
+                .setParameter("login",login)
+                .getSingleResult();
+
+    }
+
     public SessionFactory getSessionFactory() {
         return sessionFactory;
     }
