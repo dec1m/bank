@@ -11,12 +11,9 @@ public class ClientDetailsServiceImpl implements UserDetailsService {
    @Autowired
    private ClientService clientService;
     @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        System.out.println(s);
+    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
 
-        Client client = clientService.getByLogin(s);
-        System.out.println();
-        System.out.println(client);
+        Client client = clientService.getByLogin(login);
         return new ClientPrincipal(client);
     }
 

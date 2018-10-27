@@ -1,8 +1,10 @@
 package com.trach.bank.controllers;
 
 import com.trach.bank.editors.LocalDateEditor;
+import com.trach.bank.model.Account;
 import com.trach.bank.model.Client;
 import com.trach.bank.services.ClientService;
+import com.trach.bank.services.TransferServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,6 +34,8 @@ public class  ClientController {
         this.clientService = clientService;
     }
 
+
+    private  TransferServiceImpl transferService;
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         binder.registerCustomEditor(LocalDate.class,new LocalDateEditor());
@@ -54,6 +58,38 @@ public class  ClientController {
         return "/client";
 
     }
+    @RequestMapping(value = "/accounts/{login}", method = RequestMethod.GET)
+    public String showClientPage( @PathVariable("login") String login, Model model){
+        Client client = clientService.getByLogin(login);
+        model.addAttribute("client",client);
+        model.addAttribute("accounts",client.getAccountList());
+        return "/client";
+
+    }
+
+    @RequestMapping(value = "/accounts/del/{login}/{accountId}",method = RequestMethod.GET)
+    public String deleteAccount(
+            @PathVariable("accountId") long accountId, @PathVariable("login") String login){
+        Client client = clientService.getByLogin(login);
+        for (int i = 0; i < client.getAccountList().size(); i++) {
+            if( client.getAccountList().get(i).getId() == accountId ){
+                client.getAccountList().remove(client.getAccountList().get(i));
+            }
+
+        }
+        clientService.update(client);
+        return "redirect:/accounts/" + client.getLogin();
+    }
+
+    @RequestMapping(value = "/accounts/new/{id}",method = RequestMethod.GET)
+    public String newAccount(@PathVariable("id") long id){
+        Client client = clientService.findById(id);
+        client.getAccountList().add(new Account(0,client));
+        clientService.update(client);
+        return "redirect:/accounts/" + client.getLogin();
+
+    }
+
     @RequestMapping(value = "/register",method = RequestMethod.GET)
     public String registerClientPage(Model model){
         model.addAttribute("client",new Client());
@@ -68,12 +104,28 @@ public class  ClientController {
         clientService.save(client);
         return "redirect:/clients";
     }
+    @RequestMapping(value = "/accounts/transfer/{login}")
+    public String transferPage(@PathVariable("login") String login,Model model){
+        Client client = clientService.getByLogin(login);
+        model.addAttribute("transfer",new TransferServiceImpl());
+        model.addAttribute("client",client);
+
+        return "/transfer";
+
+    }
+    @RequestMapping(value = "/transfer")
+    public String transfer(@ModelAttribute TransferServiceImpl transfer){
+        transfer.transfer();
+        return "/transfer";
+
+    }
 
     @GetMapping("/delete/{id}")
     public String deleteClient(@PathVariable("id") long id){
         clientService.deleteById(id);
         return "redirect:/clients";
     }
+
     @GetMapping("update/{id}")
     public String updateClient(@PathVariable("id") long id,Model model){
         Client client = clientService.findById(id);
@@ -95,7 +147,6 @@ public class  ClientController {
           clientService.update(client);
         return "redirect:/client/" + client.getId();
     }
-
 
 
 

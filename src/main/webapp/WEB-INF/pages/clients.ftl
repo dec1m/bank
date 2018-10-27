@@ -1,11 +1,12 @@
 <#import "/spring.ftl" as spring/>
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8"/>
     <title><@spring.message "label_client_list"/></title>
 </head>
 <body>
+
 <h3><@spring.message "label_client_list"/></h3>
 <br/>
 <center>
@@ -40,5 +41,6 @@
 </table>
 <a href="/register"><@spring.message "label_register"/></a>
 </center>
+
 </body>
 </html>

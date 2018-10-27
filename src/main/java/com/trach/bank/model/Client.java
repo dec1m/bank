@@ -13,12 +13,15 @@ import java.util.Objects;
 @NamedQueries({
         @NamedQuery(name= Client.GET_LAST_NAME_BY_ID, query = "SELECT c.firstName FROM Client c WHERE id = :id"),
         @NamedQuery(name= Client.DELETE_BY_ID, query = "DELETE FROM Client c WHERE c.id = :id"),
+        @NamedQuery(name= Client.FIND_ALL_ACCOUNT, query = "SELECT c.accountList FROM Client c WHERE id = :id"),
         @NamedQuery(name= Client.FIND_ALL, query = "SELECT c FROM Client c"),
         @NamedQuery(name= Client.GET_BY_ID, query = "SELECT c FROM Client c WHERE c.id = :id"),
-        @NamedQuery(name= Client.GET_BY_LOGIN, query = "SELECT c FROM Client c WHERE c.login = :login")
+        @NamedQuery(name= Client.GET_BY_LOGIN, query = "SELECT c FROM Client c WHERE c.login = :login"),
+
 })
 
 public class Client  implements Serializable {
+
     @NotNull
     private long id;
     @NotNull
@@ -34,7 +37,6 @@ public class Client  implements Serializable {
     private int phone_number;
     @NotNull
     private LocalDate birthDay;
-
     @NotNull
     @Column(name = "login")
     @Size(min = 4, max = 15, message = "{error_login}")
@@ -43,9 +45,10 @@ public class Client  implements Serializable {
     @Size(min = 5, max = 20)
     private String role = "ROLE_USER"; //TODO, default value
     private List<Account> accountList;
-
+    public static final String FIND_BY_ACCOUNT_ID = "CLIENT.FIND_BY_ACCOUNT_ID";
     public static final String GET_BY_LOGIN = "CLIENT.GET_BY_LOGIN";
     public static final String GET_BY_ID = "CLIENT.GET_BY_ID";
+    public static final String FIND_ALL_ACCOUNT = "CLIENT.FIND_ALL_ACCOUNT";
     public static final String FIND_ALL = "CLIENT.FIND_ALL";
     public static final String DELETE_BY_ID = "CLIENT.DELETE_BY_ID";
     public static final String GET_LAST_NAME_BY_ID = "CLIENT.GET_LAST_NAME_BY_ID";
@@ -140,7 +143,8 @@ public class Client  implements Serializable {
         this.role = role;
     }
 
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
+
     public List<Account> getAccountList() {
         return accountList;
     }

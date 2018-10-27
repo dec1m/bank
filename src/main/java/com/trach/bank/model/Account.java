@@ -67,4 +67,13 @@ public class Account  implements Serializable {
 
         return Objects.hash(id, money, client);
     }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "Owner=" + client.getLogin()+
+                "id=" + id +
+                ", money=" + money +
+                '}';
+    }
 }

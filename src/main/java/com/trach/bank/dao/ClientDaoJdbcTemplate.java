@@ -4,6 +4,7 @@ import com.trach.bank.dao.crud.CustomerRowMapper;
 import com.trach.bank.dao.crud.InsertClient;
 import com.trach.bank.dao.crud.SelectAllClients;
 import com.trach.bank.dao.crud.UpdateClient;
+import com.trach.bank.model.Account;
 import com.trach.bank.model.Client;
 import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.beans.factory.InitializingBean;
@@ -12,6 +13,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import javax.sql.DataSource;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -82,6 +84,8 @@ public class ClientDaoJdbcTemplate implements ClientDao,InitializingBean {
 
     }
 
+
+
     @Override
     public void delete(Client client) {
         deleteById(client.getId());
@@ -111,6 +115,11 @@ public class ClientDaoJdbcTemplate implements ClientDao,InitializingBean {
             throw new BeanCreationException("Must set datasource on ClientDao");
         }
 
+    }
+
+    @Override
+    public Client getByIdAccount(long id) {
+        return null;
     }
 }
 

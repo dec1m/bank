@@ -11,6 +11,7 @@
 
 <h3><@spring.message "label_client_info"/> </h3>
 <br/>
+
 <table>
 
     <tr>
@@ -29,7 +30,25 @@
         <td>${client.birthDay}</td>
     </tr>
 
-</table>
-<a href="/clients"><@spring.message "label_all_clients"/></a>
+<#list accounts as account>
+    <table>
+
+        <tr>
+            <th><@spring.message "label_number_account"/></th>
+            <th><@spring.message "label_money"/></th>
+        </tr>
+
+        <tr>
+            <td>${account.id}</td>
+            <td>${account.money}</td>
+            <td><a href="/accounts/del/${client.login}/${account.id}"> <@spring.message "label_delete"/></a></td>
+            <td><a href="/accounts/new/${client.id}"> <@spring.message "label_newAccount"/></a></td>
+            <td><a href="/accounts/transfer/${client.login}"> <@spring.message "label_send"/></a></td>
+        </tr>
+
+    </table>
+</#list>
+
+
 </body>
 </html>

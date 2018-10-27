@@ -15,5 +15,6 @@
     <bean id="clientService" class="com.trach.bank.services.ClientService" depends-on="clientDaoHibernate">
     <property name="clientDao" ref="clientDaoHibernate"/>
     </bean>
+    <bean id="transfer" class="com.trach.bank.services.TransferServiceImpl"/>
 
 </beans>

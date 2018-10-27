@@ -1,7 +1,6 @@
 package com.trach.bank.dao;
 
 import com.trach.bank.model.Client;
-
 import java.util.List;
 
 public interface ClientDao {
@@ -13,4 +12,6 @@ public interface ClientDao {
     void delete(Client client);
     void deleteById(long id);
     Client getByLogin(String login);
+    Client getByIdAccount(long id);
+
 }

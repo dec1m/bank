@@ -30,7 +30,7 @@
 //        context.refresh();
 //
 //        clientDao = (ClientDao) context.getBean("clientDaoHibernate");
-//
+
 //
 //        for(int i = 0; i < COUNT_CLIENTS_IN_DB; i++){
 //            Client client  = new Client();
@@ -47,14 +47,12 @@
 //    @Test
 //    public void findAll_Test(){
 //        List<Client> clients =  clientDao.findAll();
-//        assertTrue(clients.size() > 0);
-//        assertEquals(clients.get(1).getId(),2);
-//        assertEquals("Filip",clients.get(1).getFirstName());
-//        assertEquals(clients.get(0).getId(),1);
-//        assertEquals("Eugen",clients.get(0).getFirstName());
+//        for (int i = 0; i < clients.size(); i++) {
+//            System.out.println(clients.get(i));
+//        }
 //
 //    }
-//
+
 //
 //    @Test
 //    public void selectAllClients_Bad_Param_Test(){
@@ -137,7 +135,7 @@
 //        assertNotEquals(client1,client2);
 //        assertNotEquals(client1.getId(),client2.getId());
 //    }
-//
+
 //
 //}
 //

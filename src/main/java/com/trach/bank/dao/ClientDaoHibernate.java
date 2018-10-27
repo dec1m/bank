@@ -1,8 +1,10 @@
 package com.trach.bank.dao;
 
+import com.trach.bank.model.Account;
 import com.trach.bank.model.Client;
 import org.hibernate.SessionFactory;
 import javax.transaction.Transactional;
+import java.util.Collection;
 import java.util.List;
 
 @Transactional
@@ -78,6 +80,17 @@ public class ClientDaoHibernate implements ClientDao  {
                 .createNamedQuery(Client.GET_BY_LOGIN,Client.class)
                 .setParameter("login",login)
                 .getSingleResult();
+
+    }
+
+    @Override
+    public Client getByIdAccount(long id) {
+        int clientId = (int) sessionFactory
+                .getCurrentSession()
+                .createNativeQuery("SELECT id FROM clients WHERE id = (SELECT client_id FROM accounts WHERE id = :id);")
+                .setParameter("id",id).getSingleResult();
+
+           return findById(clientId);
 
     }
 
