@@ -8,6 +8,10 @@
     <tx:annotation-driven/>
     <context:component-scan base-package="com.trach.bank"/>
 
+    <bean id="clientDaoHibernate" class="com.trach.bank.dao.ClientDaoHibernate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
     <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
@@ -21,6 +25,7 @@
         <prop key="hibernate.max_fetch_depth">3</prop>
         <prop key="hibernate.jdbc.fetch.size">50</prop>
         <prop key="hibernate.jdbc.batch.size">10</prop>
+        <prop key="hibernate.hbm2ddl.auto">update</prop>
         <prop key="hibernate.show_sql">true</prop>
     </util:properties>
 

@@ -39,7 +39,7 @@ public class ClientDaoJdbcTemplate implements ClientDao,InitializingBean {
 
     @Override
     public Client findById(long id) {
-        String sql = "SELECT id,first_name,last_name,password,email,birth_day,phone_number FROM clients WHERE id = :id";
+        String sql = "SELECT id,first_name,last_name,password,login,role,birth_day,phone_number FROM clients WHERE id = :id";
         Map<String,Object> mapParam = new HashMap();
         mapParam.put("id",id);
         Client client = jdbcTemplate.queryForObject(sql,mapParam, (RowMapper<Client>) new CustomerRowMapper());
@@ -53,7 +53,8 @@ public class ClientDaoJdbcTemplate implements ClientDao,InitializingBean {
         mapParam.put("first_name",client.getFirstName());
         mapParam.put("last_name",client.getLastName());
         mapParam.put("password",client.getPassword());
-        mapParam.put("email",client.getLogin());
+        mapParam.put("login",client.getLogin());
+        mapParam.put("role",client.getRole());
         mapParam.put("birth_day",client.getBirthDay());
         mapParam.put("phone_number",client.getPhone_number());
 
@@ -75,7 +76,8 @@ public class ClientDaoJdbcTemplate implements ClientDao,InitializingBean {
         mapParam.put("first_name", client.getFirstName());
         mapParam.put("last_name", client.getLastName());
         mapParam.put("password", client.getPassword());
-        mapParam.put("email",client.getLogin());
+        mapParam.put("login",client.getLogin());
+        mapParam.put("role",client.getRole());
         mapParam.put("phone_number", client.getPhone_number());
         mapParam.put("birth_day", client.getBirthDay());
         mapParam.put("id", client.getId());
@@ -102,7 +104,7 @@ public class ClientDaoJdbcTemplate implements ClientDao,InitializingBean {
 
     @Override
     public Client getByLogin(String login) {
-        String sql = "SELECT id,first_name,last_name,login,password,birth_day,phone_number FROM clients WHERE login = :login";
+        String sql = "SELECT id,first_name,last_name,login,password,birth_day,phone_number,role FROM clients WHERE login = :login";
         Map<String,Object> mapParam = new HashMap();
         mapParam.put("login",login);
         Client client = jdbcTemplate.queryForObject(sql,mapParam, (RowMapper<Client>) new CustomerRowMapper());
@@ -118,7 +120,7 @@ public class ClientDaoJdbcTemplate implements ClientDao,InitializingBean {
     }
 
     @Override
-    public Client getByIdAccount(long id) {
+    public Client getClientByAccountID(long id) {
         return null;
     }
 }

@@ -1,7 +1,6 @@
 package com.trach.bank.services;
 
 import com.trach.bank.dao.ClientDao;
-import com.trach.bank.model.Account;
 import com.trach.bank.model.Client;
 import java.util.List;
 
@@ -59,7 +58,7 @@ public class ClientService {
     }
 
     public Client getClientByIdAccount(long id){
-       return clientDao.getByIdAccount(id);
+       return clientDao.getClientByAccountID(id);
 
     }
 

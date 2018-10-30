@@ -38,13 +38,15 @@ public class Client  implements Serializable {
     @NotNull
     private LocalDate birthDay;
     @NotNull
-    @Column(name = "login")
     @Size(min = 4, max = 15, message = "{error_login}")
     private String login;
     @NotNull
     @Size(min = 5, max = 20)
     private String role = "ROLE_USER"; //TODO, default value
     private List<Account> accountList;
+
+
+
     public static final String FIND_BY_ACCOUNT_ID = "CLIENT.FIND_BY_ACCOUNT_ID";
     public static final String GET_BY_LOGIN = "CLIENT.GET_BY_LOGIN";
     public static final String GET_BY_ID = "CLIENT.GET_BY_ID";
@@ -153,10 +155,7 @@ public class Client  implements Serializable {
         this.accountList = accountList;
     }
 
-    public void setBirthDay(String stringDate) {
-        this.birthDay = LocalDate.parse(stringDate);
 
-    }
 
     public String getLogin() {
         return login;
@@ -166,25 +165,25 @@ public class Client  implements Serializable {
         this.login = login;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Client client = (Client) o;
-        return id == client.id &&
-                phone_number == client.phone_number &&
-                Objects.equals(firstName, client.firstName) &&
-                Objects.equals(lastName, client.lastName) &&
-                Objects.equals(password, client.password) &&
-                Objects.equals(birthDay.getDayOfMonth(), client.birthDay.getDayOfMonth()) &&
-                Objects.equals(birthDay.getMonth(), client.birthDay.getMonth()) &&
-                Objects.equals(birthDay.getYear(), client.birthDay.getYear());
+        return getId() == client.getId() &&
+                getPhone_number() == client.getPhone_number() &&
+                Objects.equals(getFirstName(), client.getFirstName()) &&
+                Objects.equals(getLastName(), client.getLastName()) &&
+                Objects.equals(getPassword(), client.getPassword()) &&
+                Objects.equals(getBirthDay(), client.getBirthDay()) &&
+                Objects.equals(getLogin(), client.getLogin()) &&
+                Objects.equals(getRole(), client.getRole());
     }
 
     @Override
     public int hashCode() {
-
-        return Objects.hash(id, firstName, lastName, password, phone_number, birthDay);
+        return Objects.hash(getId(), getFirstName(), getLastName(), getPassword(), getPhone_number(), getBirthDay(), getLogin(), getRole());
     }
 
     @Override

@@ -26,7 +26,7 @@ public class  ClientController {
 
 
 
-    public ClientService getClientService() {
+    public  ClientService getClientService() {
         return clientService;
     }
     @Autowired

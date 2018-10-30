@@ -18,8 +18,8 @@ public class TransferServiceImpl implements TransferService {
         if(idAccountTarget == 0 || idAccountTarget == 0 || countMoney == 0 ){
             throw new IllegalArgumentException("NO INIT PROPERTIES");
         }
-        Client clientSender = clientDao.getByIdAccount(idAccountSender);
-        Client clientTarget = clientDao.getByIdAccount(idAccountTarget);
+        Client clientSender = clientDao.getClientByAccountID(idAccountSender);
+        Client clientTarget = clientDao.getClientByAccountID(idAccountTarget);
 
         for (int i = 0; i < clientSender.getAccountList().size() ; i++) {
                 if(clientSender.getAccountList().get(i).getId() == idAccountSender && clientSender.getAccountList().get(i).getMoney() > countMoney ){

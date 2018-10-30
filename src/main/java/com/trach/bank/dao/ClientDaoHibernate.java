@@ -84,7 +84,7 @@ public class ClientDaoHibernate implements ClientDao  {
     }
 
     @Override
-    public Client getByIdAccount(long id) {
+    public Client getClientByAccountID(long id) {
         int clientId = (int) sessionFactory
                 .getCurrentSession()
                 .createNativeQuery("SELECT id FROM clients WHERE id = (SELECT client_id FROM accounts WHERE id = :id);")
