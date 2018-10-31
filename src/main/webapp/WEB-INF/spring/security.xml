@@ -39,7 +39,7 @@
        ><beans:constructor-arg name="strength"  value="11"/>
     </beans:bean>
 
-    <beans:bean id="clientDetailsService" class="com.trach.bank.security.ClientDetailsServiceImpl"/>
+    <beans:bean id="clientDetailsService" class="com.trach.bank.services.ClientDetailsServiceImpl"/>
 
     <global-method-security  secured-annotations="enabled" jsr250-annotations="enabled" pre-post-annotations="enabled"  />
 

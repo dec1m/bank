@@ -4,10 +4,10 @@ import com.trach.bank.model.Authority;
 import com.trach.bank.model.Client;
 import org.springframework.security.core.GrantedAuthority;
 
-public class ClientGrantedAuthority implements GrantedAuthority {
+public class GrantedAuthorityImpl implements GrantedAuthority {
     private Authority authority;
 
-    public ClientGrantedAuthority(Authority authority) {
+    public GrantedAuthorityImpl(Authority authority) {
         this.authority=authority;
     }
 

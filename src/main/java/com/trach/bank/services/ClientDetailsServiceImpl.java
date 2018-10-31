@@ -1,28 +1,22 @@
-package com.trach.bank.security;
+package com.trach.bank.services;
 
+import com.trach.bank.dao.ClientDao;
 import com.trach.bank.model.Client;
-import com.trach.bank.services.ClientService;
+import com.trach.bank.security.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 public class ClientDetailsServiceImpl implements UserDetailsService {
+
    @Autowired
-   private ClientService clientService;
+   private ClientDao clientDao;
+
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-
-        Client client = clientService.getByLogin(login);
-
-        return new ClientPrincipal(client);
+        Client client = clientDao.getByLogin(login);
+        return new UserDetailsImpl(client);
     }
 
-    public ClientService getClientService() {
-        return clientService;
-    }
-
-    public void setClientService(ClientService clientService) {
-        this.clientService = clientService;
-    }
 }
