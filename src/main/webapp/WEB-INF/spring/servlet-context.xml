@@ -4,6 +4,7 @@
              xmlns:beans="http://www.springframework.org/schema/beans"
              xmlns:p="http://www.springframework.org/schema/p"
              xmlns:context="http://www.springframework.org/schema/context"
+             xmlns:security="http://www.springframework.org/schema/security"
              xsi:schemaLocation="http://www.springframework.org/schema/mvc
         http://www.springframework.org/schema/mvc/spring-mvc.xsd
         http://www.springframework.org/schema/beans
@@ -11,10 +12,9 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/security
-        http://www.springframework.org/schema/mvc ">
+        http://www.springframework.org/schema/security/spring-security-4.2.xsd">
 
     <annotation-driven validator="validator"/>
-
 
     <resources location="/, classpath:/META-INF/web-resources/" mapping="/resources/**"/>
 
@@ -51,6 +51,7 @@
     <beans:bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
         <beans:property name="validationMessageSource" ref="messageSource"/>
     </beans:bean>
+
 
 
 </beans:beans>

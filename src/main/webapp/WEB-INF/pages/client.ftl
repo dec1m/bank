@@ -30,7 +30,8 @@
         <td>${client.birthDay}</td>
     </tr>
 
-<#list accounts as account>
+    <#if accounts??>
+        <#list accounts as account>
     <table>
 
         <tr>
@@ -47,7 +48,9 @@
         </tr>
 
     </table>
-</#list>
+        </#list>
+    </#if>
+
 
 
 </body>

@@ -22,17 +22,15 @@
     <p><@spring.message "label_login"/></p>
     <input title="<@spring.message "label_login"/>" type="text" name="login" value="${client.login}">
 
+
+
     <#--<p><@spring.message "label_authority"/></p>-->
-    <#--<input title="<@spring.message "label_authority"/>" type="text" name="role" value="${client.role}">-->
 
-
-    <p><@spring.message "label_authority"/></p>
-
-    <select   name="role"   size="1" >
-        <option  value="<@spring.message "admin"/>"><@spring.message "label_admin"/></option>
-        <option  selected value="<@spring.message "user"/>"><@spring.message "label_user"/></option>
-        <option value="<@spring.message "anonymous"/>"><@spring.message "label_anonymous"/></option>
-    </select>
+    <#--<select   name="role"   size="1" >-->
+        <#--<option  value="<@spring.message "admin"/>"><@spring.message "label_admin"/></option>-->
+        <#--<option  selected value="<@spring.message "user"/>"><@spring.message "label_user"/></option>-->
+        <#--<option value="<@spring.message "anonymous"/>"><@spring.message "label_anonymous"/></option>-->
+    <#--</select>-->
 
 
 

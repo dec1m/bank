@@ -1,10 +1,9 @@
 package com.trach.bank.dao;
 
-import com.trach.bank.model.Account;
+
 import com.trach.bank.model.Client;
 import org.hibernate.SessionFactory;
 import javax.transaction.Transactional;
-import java.util.Collection;
 import java.util.List;
 
 @Transactional

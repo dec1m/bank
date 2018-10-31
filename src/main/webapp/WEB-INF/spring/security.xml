@@ -35,8 +35,12 @@
         </authentication-provider>
     </authentication-manager>
 
-    <beans:bean id ="passwordEncoder" class = "org.springframework.security.crypto.password.NoOpPasswordEncoder"
-          factory-method = "getInstance" />
+    <beans:bean id ="passwordEncoder" class = "org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"
+       ><beans:constructor-arg name="strength"  value="11"/>
+    </beans:bean>
+
     <beans:bean id="clientDetailsService" class="com.trach.bank.security.ClientDetailsServiceImpl"/>
+
+    <global-method-security  secured-annotations="enabled" jsr250-annotations="enabled" pre-post-annotations="enabled"  />
 
 </beans:beans>

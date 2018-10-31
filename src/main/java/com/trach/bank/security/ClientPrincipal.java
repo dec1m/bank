@@ -1,13 +1,12 @@
 package com.trach.bank.security;
 
+import com.trach.bank.model.Authority;
 import com.trach.bank.model.Client;
+import com.trach.bank.model.Group;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-
+import java.util.*;
 
 
 public class ClientPrincipal implements UserDetails {
@@ -16,8 +15,36 @@ public class ClientPrincipal implements UserDetails {
 
     public ClientPrincipal(Client client){
         this.client = client;
-        ClientGrantedAuthority clientGrantedAuthority = new ClientGrantedAuthority(client);
-        authorities.add(clientGrantedAuthority);
+        Group group;
+        Authority authority;
+        ClientGrantedAuthority clientGrantedAuthority;
+        for (int countGroupInClient = 0; countGroupInClient < client.getGroups().size(); countGroupInClient++) {
+            group = client.getGroups().get(countGroupInClient);
+
+            for(int countAuthoritiesInGroup = 0; countAuthoritiesInGroup < group.getAuthorities().size(); countAuthoritiesInGroup++){
+                      authority = group.getAuthorities().get(countAuthoritiesInGroup);
+                      authorities.add(new ClientGrantedAuthority(authority));
+            }
+
+        }
+        System.out.println("===================================================");
+        System.out.println("===================================================");
+        System.out.println("===================================================");
+        System.out.println("===================================================");
+        System.out.println("===================================================");
+        System.out.println("===================================================");
+        Iterator<GrantedAuthority> iterator = authorities.iterator();
+        while (iterator.hasNext()){
+
+            GrantedAuthority next = iterator.next();
+            System.out.println(next.getAuthority());
+        }
+        System.out.println("===================================================");
+        System.out.println("===================================================");
+        System.out.println("===================================================");
+        System.out.println("===================================================");
+        System.out.println("===================================================");
+
     }
 
 

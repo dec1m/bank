@@ -14,6 +14,7 @@ public class ClientDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
 
         Client client = clientService.getByLogin(login);
+
         return new ClientPrincipal(client);
     }
 

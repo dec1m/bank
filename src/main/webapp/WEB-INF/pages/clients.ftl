@@ -28,7 +28,6 @@
       <td>${client.firstName}</td>
       <td>${client.lastName}</td>
       <td>${client.login}</td>
-      <td>${client.role}</td>
       <td>${client.phone_number}</td>
       <td>${client.birthDay}</td>
       <td><a href="/update/${client.id}"><@spring.message "label_update"/></a></td>

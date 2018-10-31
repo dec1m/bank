@@ -1,25 +1,19 @@
 package com.trach.bank.security;
 
+import com.trach.bank.model.Authority;
 import com.trach.bank.model.Client;
 import org.springframework.security.core.GrantedAuthority;
 
 public class ClientGrantedAuthority implements GrantedAuthority {
-    private Client client;
+    private Authority authority;
 
-    public ClientGrantedAuthority(Client client) {
-        this.client=client;
+    public ClientGrantedAuthority(Authority authority) {
+        this.authority=authority;
     }
 
     @Override
     public String getAuthority() {
-       return client.getRole();
+       return authority.getName();
     }
 
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
 }

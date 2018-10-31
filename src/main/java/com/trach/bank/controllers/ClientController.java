@@ -26,7 +26,7 @@ public class  ClientController {
 
 
 
-    public  ClientService getClientService() {
+    public ClientService getClientService() {
         return clientService;
     }
     @Autowired
@@ -48,13 +48,13 @@ public class  ClientController {
 
     @RequestMapping(value = "/clients")
     public String getAllClients(Model model){
-         model.addAttribute("clients",clientService.findAll());
+         model.addAttribute("clients", clientService.findAll());
         return "/clients";
 
     }
     @RequestMapping("/client/{id}")
     public String showClient( @PathVariable("id") long id, Model model){
-        model.addAttribute("client",clientService.findById(id));
+        model.addAttribute("client", clientService.findById(id));
         return "/client";
 
     }
@@ -144,7 +144,7 @@ public class  ClientController {
         if (bindingResult.hasErrors()) {
             return "/update/"+ client.getId();
         }
-          clientService.update(client);
+        clientService.update(client);
         return "redirect:/client/" + client.getId();
     }
 

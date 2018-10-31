@@ -1,69 +1,29 @@
 package com.trach.bank.services;
 
-import com.trach.bank.dao.ClientDao;
+
 import com.trach.bank.model.Client;
+import org.springframework.security.access.annotation.Secured;
+
 import java.util.List;
 
+public interface ClientService {
+    @Secured("ROLE_ADMIN")
+     List<Client> findAll();
+    @Secured("{ROLE_ADMIN,ROLE_USER}")
+     Client findById(long id);
+ @Secured("{ROLE_ADMIN,ROLE_USER}")
+     void save(Client client);
+ @Secured("{ROLE_ADMIN,ROLE_USER}")
+     String findFirstNameById(long id);
+ @Secured("ROLE_ADMIN")
+     void update(Client client) ;
+ @Secured("ROLE_ADMIN")
+     void delete(Client client);
+ @Secured("ROLE_ADMIN")
+     void deleteById(long id);
 
-public class ClientService {
+     Client getByLogin(String login);
 
-    private ClientDao clientDao;
-
-    public ClientDao getClientDao() {
-        return clientDao;
-    }
-
-
-     public void setClientDao(ClientDao clientDao) {
-        this.clientDao = clientDao;
-    }
-
-
-    public List<Client> findAll() {
-        return clientDao.findAll();
-    }
-
-
-    public Client findById(long id) {
-        return clientDao.findById(id);
-    }
-
-
-    public void save(Client client) {
-        clientDao.save(client);
-    }
-
-
-    public String findFirstNameById(long id) {
-        return clientDao.findFirstNameById(id);
-    }
-
-
-    public void update(Client client) {
-        clientDao.update(client);
-    }
-
-
-    public void delete(Client client) {
-        clientDao.delete(client);
-    }
-
-
-    public void deleteById(long id) {
-        clientDao.deleteById(id);
-    }
-
-    public Client getByLogin(String login){
-       return clientDao.getByLogin(login);
-    }
-
-    public Client getClientByIdAccount(long id){
-       return clientDao.getClientByAccountID(id);
-
-    }
-
-    public void transfer(Client client,long idAccountSender, long idAccountTarget,long countMoney){
-
-    }
+     Client getClientByIdAccount(long id);
 
 }
