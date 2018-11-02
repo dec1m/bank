@@ -74,11 +74,11 @@ public class ClientDaoHibernate_Test {
         client.setLogin("decim");
         client.setPhone_number(67389042);
 
-        Client actual = dao.getByLogin("decim");
+        Client actual = dao.findByLogin("decim");
         assertEquals(client,actual);
     }
 
-    //Dependent  dao.getByLogin();
+    //Dependent  dao.findByLogin();
     @Test
     public void persist_Test(){
        Client persistClient = new Client();
@@ -91,7 +91,7 @@ public class ClientDaoHibernate_Test {
 
         dao.save(persistClient);
 
-      Client actual = dao.getByLogin("persist_Test");
+      Client actual = dao.findByLogin("persist_Test");
 
        assertEquals(persistClient,actual);
 
@@ -111,7 +111,7 @@ public class ClientDaoHibernate_Test {
         deleteClient.setPhone_number(67389042);
         dao.save(deleteClient);
         dao.delete(deleteClient);
-        dao.getByLogin("deleteClient");
+        dao.findByLogin("deleteClient");
 
 
     }
@@ -150,7 +150,7 @@ public class ClientDaoHibernate_Test {
 //
 //        dao.save(client);
 //
-//        Client clientByAccountID = dao.getClientByAccountID(1);
+//        Client clientByAccountID = dao.findClientByAccountID(1);
 //
 //
 //        assertEquals(clientByAccountID.getAccountList().get(0),account);

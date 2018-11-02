@@ -10,16 +10,15 @@ import java.util.*;
 
 
 public class UserDetailsImpl implements UserDetails  {
+
     private final Set<GrantedAuthority> authorities = new HashSet<>();
     private Client client;
 
+
+
     public UserDetailsImpl(Client client)   {
         this.client = client;
-        try {
-            initAuthorities();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
+        setAuthoritiesByLogin(client.getLogin());
     }
 
 
@@ -58,23 +57,28 @@ public class UserDetailsImpl implements UserDetails  {
         return true;
     }
 
-    public void initAuthorities() throws IllegalAccessException {
+    private void setAuthoritiesByLogin(String login)  {
 
-        if( client == null){
-            throw new IllegalAccessException("property client (type Client.class) must be installed. client == NULL ");
-        }
-        Group group;
+        Group group = client.getGroup();
         Authority authority;
-        for (int countGroupInClient = 0; countGroupInClient < client.getGroups().size(); countGroupInClient++) {
-            group = client.getGroups().get(countGroupInClient);
-
             for(int countAuthoritiesInGroup = 0; countAuthoritiesInGroup < group.getAuthorities().size(); countAuthoritiesInGroup++){
                 authority = group.getAuthorities().get(countAuthoritiesInGroup);
                 authorities.add(new GrantedAuthorityImpl(authority));
             }
-
+        System.out.println("=================================");
+        System.out.println("=================================");
+        System.out.println("=================================");
+        System.out.println("=================================");
+        for (GrantedAuthority grantedAuthority : authorities) {
+            System.out.println(grantedAuthority.getAuthority());
         }
+        System.out.println("=================================");
+        System.out.println("=================================");
+        System.out.println("=================================");
+        System.out.println("=================================");
+
     }
+
 
 
 }

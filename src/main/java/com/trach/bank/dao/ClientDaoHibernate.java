@@ -30,9 +30,11 @@ public class ClientDaoHibernate implements ClientDao  {
 
     @Override
     public void save(Client client) {
+
         sessionFactory
                 .getCurrentSession()
                 .saveOrUpdate(client);
+
     }
 
     @Override
@@ -73,7 +75,7 @@ public class ClientDaoHibernate implements ClientDao  {
     }
 
     @Override
-    public Client getByLogin(String login) {
+    public Client findByLogin(String login) {
        return sessionFactory
                 .getCurrentSession()
                 .createNamedQuery(Client.GET_BY_LOGIN,Client.class)
@@ -83,11 +85,12 @@ public class ClientDaoHibernate implements ClientDao  {
     }
 
     @Override
-    public Client getClientByAccountID(long id) {
-        int clientId = (int) sessionFactory
+    public Client findClientByAccountID(long id) {
+        long clientId = (long) sessionFactory
                 .getCurrentSession()
                 .createNativeQuery("SELECT id FROM clients WHERE id = (SELECT client_id FROM accounts WHERE id = :id);")
-                .setParameter("id",id).getSingleResult();
+                .setParameter("id",id)
+                .getSingleResult();
 
            return findById(clientId);
 

@@ -42,8 +42,7 @@ public class Account  implements Serializable {
     public void setMoney(int money) {
         this.money = money;
     }
-    @ManyToOne
-    @JoinColumn(name = "client_id")
+    @OneToOne(mappedBy = "account", fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     public Client getClient() {
         return client;
     }

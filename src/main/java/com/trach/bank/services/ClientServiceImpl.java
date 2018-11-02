@@ -2,12 +2,26 @@ package com.trach.bank.services;
 
 import com.trach.bank.dao.ClientDao;
 import com.trach.bank.model.Client;
+import com.trach.bank.model.Group;
+import com.trach.bank.services.interfaces.ClientService;
+import com.trach.bank.services.interfaces.GroupService;
+
 import java.util.List;
 
 
 public class ClientServiceImpl implements ClientService {
 
     private ClientDao clientDao;
+
+    private GroupService groupService;
+
+    public GroupService getGroupService() {
+        return groupService;
+    }
+
+    public void setGroupService(GroupService groupService) {
+        this.groupService = groupService;
+    }
 
     public ClientDao getClientDao() {
         return clientDao;
@@ -30,7 +44,10 @@ public class ClientServiceImpl implements ClientService {
 
 
     public void save(Client client) {
+        Group group = groupService.findGroupByName("User");
+        client.setGroup(group);
         clientDao.save(client);
+
     }
 
 
@@ -54,13 +71,14 @@ public class ClientServiceImpl implements ClientService {
     }
 
     public Client getByLogin(String login){
-       return clientDao.getByLogin(login);
+       return clientDao.findByLogin(login);
     }
 
     public Client getClientByIdAccount(long id){
-       return clientDao.getClientByAccountID(id);
+       return clientDao.findClientByAccountID(id);
 
     }
+
 
     public void transfer(Client client,long idAccountSender, long idAccountTarget,long countMoney){
 

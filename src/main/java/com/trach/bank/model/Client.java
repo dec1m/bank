@@ -12,7 +12,7 @@ import java.util.*;
 @NamedQueries({
         @NamedQuery(name = Client.GET_LAST_NAME_BY_ID, query = "SELECT c.firstName FROM Client c WHERE id = :id"),
         @NamedQuery(name = Client.DELETE_BY_ID, query = "DELETE FROM Client c WHERE c.id = :id"),
-        @NamedQuery(name = Client.FIND_ALL_ACCOUNT, query = "SELECT c.accountList FROM Client c WHERE id = :id"),
+        @NamedQuery(name = Client.FIND_ALL_ACCOUNT, query = "SELECT c.account FROM Client c WHERE id = :id"),
         @NamedQuery(name = Client.FIND_ALL, query = "SELECT c FROM Client c"),
         @NamedQuery(name = Client.GET_BY_ID, query = "SELECT c FROM Client c WHERE c.id = :id"),
         @NamedQuery(name = Client.GET_BY_LOGIN, query = "SELECT c FROM Client c WHERE c.login = :login"),
@@ -29,8 +29,8 @@ public class Client implements Serializable {
     private int phone_number;
     private LocalDate birthDay;
     private String login;
-    private List<Account> accountList;
-    private List<Group> groups = new ArrayList<>();
+    private Account account;
+    private Group group;
 
     public static final String FIND_BY_ACCOUNT_ID = "CLIENT.FIND_BY_ACCOUNT_ID";
     public static final String GET_BY_LOGIN = "CLIENT.GET_BY_LOGIN";
@@ -41,27 +41,30 @@ public class Client implements Serializable {
     public static final String GET_LAST_NAME_BY_ID = "CLIENT.GET_LAST_NAME_BY_ID";
 
     public Client() {
+        account = new Account();
+        account.setMoney(100);
+        account.setClient(this);
     }
 
     public Client(String firstName, String lastName, String password, int phone_number, String login,
-                  LocalDate birthDay, List<Account> accountList) {
+                  LocalDate birthDay, Account account) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
         this.phone_number = phone_number;
         this.birthDay = birthDay;
-        this.accountList = accountList;
+        this.account = account;
     }
 
     public Client(long id, String firstName, String lastName,
-                  String password, int phone_number, LocalDate birthDay, String login, List<Account> accountList) {
+                  String password, int phone_number, LocalDate birthDay, String login, Account account) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
         this.phone_number = phone_number;
         this.birthDay = birthDay;
-        this.accountList = accountList;
+        this.account = account;
     }
 
     @Id
@@ -100,7 +103,7 @@ public class Client implements Serializable {
     }
 
     @Column(name = "password")
-    @Size(min = 6, max = 32, message = "{password.size.error}")
+    @Size(min = 6, max = 60, message = "{password.size.error}")
     @NotNull
     public String getPassword() {
         return password;
@@ -132,32 +135,24 @@ public class Client implements Serializable {
     }
 
 
-
-    @ManyToMany(cascade = { CascadeType.ALL })
-    @JoinTable(
-            name = "client_groups",
-            joinColumns = @JoinColumn(
-                    name = "client_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(
-                    name = "group_id", referencedColumnName = "id"))
-    public List<Group> getGroups() {
-        return groups;
+    @OneToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+    @JoinColumn(name = "account_id")
+    public Account getAccount() {
+        return account;
     }
 
-    public void setGroups(List<Group> groups) {
-        this.groups = groups;
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
-    @OneToMany( mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
-
-    public List<Account> getAccountList() {
-        return accountList;
+    @ManyToOne (fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+      public Group getGroup() {
+        return group;
     }
 
-    public void setAccountList(List<Account> accountList) {
-        this.accountList = accountList;
+    public void setGroup(Group group) {
+        this.group = group;
     }
-
 
     @NotNull
     @Size(min = 4, max = 15, message = "{error_login}")

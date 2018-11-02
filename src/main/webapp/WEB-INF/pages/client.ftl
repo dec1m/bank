@@ -30,8 +30,8 @@
         <td>${client.birthDay}</td>
     </tr>
 
-    <#if accounts??>
-        <#list accounts as account>
+
+
     <table>
 
         <tr>
@@ -40,16 +40,13 @@
         </tr>
 
         <tr>
-            <td>${account.id}</td>
-            <td>${account.money}</td>
-            <td><a href="/accounts/del/${client.login}/${account.id}"> <@spring.message "label_delete"/></a></td>
-            <td><a href="/accounts/new/${client.id}"> <@spring.message "label_newAccount"/></a></td>
-            <td><a href="/accounts/transfer/${client.login}"> <@spring.message "label_send"/></a></td>
+            <td>${client.account.id}</td>
+            <td>${client.account.money}</td>
+            <td><a href="/account/transfer"> <@spring.message "label_send"/></a></td>
         </tr>
 
     </table>
-        </#list>
-    </#if>
+
 
 
 

@@ -8,16 +8,27 @@
         <import resource="classpath:/db/datasource.xml"/>
         <import resource="classpath:/db/hibernate-datasource.xml"/>
 
-    <context:component-scan base-package="com.trach.bank.*"/>
+    <context:component-scan base-package="com.trach.bank"/>
 
     <bean id="clientDao" class="com.trach.bank.dao.ClientDaoHibernate">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
-    <bean id="clientService" class="com.trach.bank.services.ClientServiceImpl" depends-on="clientDao">
+    <bean   id="clientService" class="com.trach.bank.services.ClientServiceImpl" depends-on="clientDao,groupService">
     <property name="clientDao" ref="clientDao"/>
-    </bean>
+    <property name="groupService" ref="groupService"/>
 
-    <bean id="transfer" class="com.trach.bank.services.TransferServiceImpl"/>
+    </bean>
+<bean id="groupDao" class="com.trach.bank.dao.GroupDaoImpl">
+    <property name="sessionFactory" ref="sessionFactory"/>
+</bean>
+
+    <bean   id="groupService" class="com.trach.bank.services.GroupServiceImpl" depends-on="groupDao">
+        <property name="groupDao" ref="groupDao"/>
+
+    </bean>
+    <bean id="transfer" class="com.trach.bank.services.TransferServiceImpl">
+        <property name="clientService" ref="clientService"/>
+    </bean>
 
 </beans>

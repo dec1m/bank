@@ -1,64 +1,66 @@
 package com.trach.bank.services;
 
-import com.trach.bank.dao.ClientDao;
+
+import com.trach.bank.TransferDTO;
 import com.trach.bank.model.Client;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.trach.bank.services.interfaces.ClientService;
+import com.trach.bank.services.interfaces.TransferService;
+import org.springframework.transaction.annotation.Transactional;
+
 
 public class TransferServiceImpl implements TransferService {
+    private Client clientSender;
+    private long idSender;
+    private long idTarget;
+    private int countMoneyToTransfer;
 
-    private long idAccountSender;
-    private long idAccountTarget;
-    private int countMoney;
 
-    @Autowired
-    private ClientDao clientDao;
+    private ClientService clientService;
 
     @Override
-    public void transfer() {
-        if(idAccountTarget == 0 || idAccountTarget == 0 || countMoney == 0 ){
-            throw new IllegalArgumentException("NO INIT PROPERTIES");
+    public void transfer(TransferDTO dto) {
+        idSender = dto.getIdSender();
+        idTarget = dto.getIdTarget();
+        countMoneyToTransfer = dto.getCountMoney();
+        Client clientTarget = clientService.findById(dto.getIdTarget());
+        Client clientSender = clientService.findById(dto.getIdSender());
+
+        if(clientSender == null || clientTarget == null) {
+            throw new IllegalArgumentException("clientSender == null OR clientTarget == null");
         }
-        Client clientSender = clientDao.getClientByAccountID(idAccountSender);
-        Client clientTarget = clientDao.getClientByAccountID(idAccountTarget);
-
-        for (int i = 0; i < clientSender.getAccountList().size() ; i++) {
-                if(clientSender.getAccountList().get(i).getId() == idAccountSender && clientSender.getAccountList().get(i).getMoney() > countMoney ){
-                    clientSender.getAccountList().get(i).setMoney(clientSender.getAccountList().get(i).getMoney() - countMoney);
-                    for (int j = 0; j < idAccountTarget; j++) {
-                        if(clientTarget.getAccountList().get(j).getId() ==  idAccountTarget){
-                            int moneyInTarget = clientTarget.getAccountList().get(j).getMoney();
-                            clientTarget.getAccountList().get(j).setMoney( moneyInTarget + countMoney);
-                        }
-                    }
-                }
-
+        if(clientSender.getAccount().getMoney() < countMoneyToTransfer){
+            throw new IllegalArgumentException("Not enough money in the account");
         }
 
+
+        transfer(clientTarget,clientSender);
+
+
+
     }
 
-
-
-    public long getIdAccountSender() {
-        return idAccountSender;
+    @Transactional
+     void transfer(Client target,Client sender){
+        sender.getAccount().setMoney(sender.getAccount().getMoney() - countMoneyToTransfer); //Withdrawal from the account
+        clientService.update(sender);
+        target.getAccount().setMoney(target.getAccount().getMoney() + countMoneyToTransfer); //Account replenishment
+        clientService.update(target);
     }
 
-    public void setIdAccountSender(long idAccountSender) {
-        this.idAccountSender = idAccountSender;
-    }
-
-    public long getIdAccountTarget() {
-        return idAccountTarget;
-    }
-
-    public void setIdAccountTarget(long idAccountTarget) {
-        this.idAccountTarget = idAccountTarget;
-    }
 
     public long getCountMoney() {
-        return countMoney;
+        return countMoneyToTransfer;
     }
 
     public void setCountMoney(int countMoney) {
-        this.countMoney = countMoney;
+        this.countMoneyToTransfer = countMoney;
+    }
+
+    public ClientService getClientService() {
+        return clientService;
+    }
+
+    public void setClientService(ClientService clientService) {
+        this.clientService = clientService;
     }
 }
