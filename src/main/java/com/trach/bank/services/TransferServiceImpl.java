@@ -1,7 +1,7 @@
 package com.trach.bank.services;
 
 
-import com.trach.bank.TransferDTO;
+import com.trach.bank.dto.TransferDTO;
 import com.trach.bank.model.Client;
 import com.trach.bank.services.interfaces.ClientService;
 import com.trach.bank.services.interfaces.TransferService;

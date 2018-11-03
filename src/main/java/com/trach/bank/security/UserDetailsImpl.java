@@ -18,7 +18,7 @@ public class UserDetailsImpl implements UserDetails  {
 
     public UserDetailsImpl(Client client)   {
         this.client = client;
-        setAuthoritiesByLogin(client.getLogin());
+        setAuthoritiesByLogin();
     }
 
 
@@ -57,7 +57,7 @@ public class UserDetailsImpl implements UserDetails  {
         return true;
     }
 
-    private void setAuthoritiesByLogin(String login)  {
+    private void setAuthoritiesByLogin()  {
 
         Group group = client.getGroup();
         Authority authority;
@@ -65,19 +65,10 @@ public class UserDetailsImpl implements UserDetails  {
                 authority = group.getAuthorities().get(countAuthoritiesInGroup);
                 authorities.add(new GrantedAuthorityImpl(authority));
             }
-        System.out.println("=================================");
-        System.out.println("=================================");
-        System.out.println("=================================");
-        System.out.println("=================================");
-        for (GrantedAuthority grantedAuthority : authorities) {
-            System.out.println(grantedAuthority.getAuthority());
-        }
-        System.out.println("=================================");
-        System.out.println("=================================");
-        System.out.println("=================================");
-        System.out.println("=================================");
 
     }
+
+
 
 
 

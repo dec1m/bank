@@ -1,9 +1,8 @@
 package com.trach.bank.controllers;
 
 
-import com.trach.bank.TransferDTO;
+import com.trach.bank.dto.TransferDTO;
 import com.trach.bank.editors.LocalDateEditor;
-import com.trach.bank.model.Account;
 import com.trach.bank.model.Client;
 import com.trach.bank.services.interfaces.ClientService;
 import com.trach.bank.services.interfaces.TransferService;

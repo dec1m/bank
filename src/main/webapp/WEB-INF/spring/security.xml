@@ -2,10 +2,11 @@
 <beans:beans xmlns="http://www.springframework.org/schema/security"
              xmlns:beans="http://www.springframework.org/schema/beans"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:context="http://www.springframework.org/schema/context"
              xsi:schemaLocation="http://www.springframework.org/schema/beans
              http://www.springframework.org/schema/beans/spring-beans.xsd
              http://www.springframework.org/schema/security
-             http://www.springframework.org/schema/security/spring-security-4.2.xsd">
+             http://www.springframework.org/schema/security/spring-security-4.2.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 <http use-expressions="true">
     <intercept-url pattern="/clients" access="hasRole('ROLE_ADMIN')"/>
@@ -28,8 +29,8 @@
 
 </http>
     <authentication-manager>
-        <authentication-provider user-service-ref="clientDetailsService">
-            <password-encoder ref="passwordEncoder"/>
+        <authentication-provider ref="customAuthenticationProvider">
+
         </authentication-provider>
     </authentication-manager>
 
@@ -38,6 +39,11 @@
     </beans:bean>
 
     <beans:bean id="clientDetailsService" class="com.trach.bank.services.ClientDetailsServiceImpl"/>
+
+    <beans:bean id="customAuthenticationProvider" class="com.trach.bank.security.CustomAuthenticationProvider">
+        <beans:property name="clientService" ref="clientService"/>
+        <beans:property name="encoder" ref="passwordEncoder"/>
+    </beans:bean>
 
     <global-method-security  secured-annotations="enabled" jsr250-annotations="enabled" pre-post-annotations="enabled"  />
 

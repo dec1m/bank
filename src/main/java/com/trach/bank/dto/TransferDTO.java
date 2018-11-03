@@ -1,4 +1,4 @@
-package com.trach.bank;
+package com.trach.bank.dto;
 
 
 import java.util.Objects;
