@@ -1,8 +1,8 @@
 package com.trach.bank.controllers;
 
-//hg
 
 
+import com.trach.bank.model.Account;
 import com.trach.bank.model.Client;
 import com.trach.bank.services.interfaces.ClientService;
 import org.junit.Before;
@@ -10,7 +10,7 @@ import org.junit.Test;
 import org.springframework.ui.Model;
 
 import java.util.List;
-
+import org.springframework.validation.BindingResult;
 import static junit.framework.TestCase.assertEquals;
 import static org.mockito.Mockito.*;
 public class ClientControllerTest {
@@ -35,6 +35,7 @@ public class ClientControllerTest {
        assertEquals(expected,actual);
     }
 
+
     @Test
     public void getAllClients_return_value_Test(){
         String expected = "/clients";
@@ -57,7 +58,7 @@ public class ClientControllerTest {
     }
 
     @Test
-    public void showClient_param_value_Test(){
+    public void showClient_param_value_in_model_Test(){
      Client client = new Client();
      client.setId(1);
      when(controller.getClientService().findById(anyLong())).thenReturn(client);
@@ -66,8 +67,141 @@ public class ClientControllerTest {
 
 
       }
+    @Test
+    public void showClientPage_return_value_Test(){
+        Client clientMock = mock(Client.class);
+        when(controller.getClientService().getByLogin(anyString())).thenReturn(clientMock);
+        String expected = "/client";
+        String actual = controller.showClientPage("nickname",model);
+        assertEquals(expected,actual);
+    }
+
+    @Test
+    public void showClientPage_param_value_in_model_Test(){
+        Client clientMock = mock(Client.class);
+        when(controller.getClientService().getByLogin(anyString())).thenReturn(clientMock);
+        when(clientMock.getAccount()).thenReturn(new Account());
+
+        controller.showClientPage("nickname",model);
+
+       verify(model).addAttribute(eq("client"), isA(Client.class));
+       verify(model).addAttribute(eq("accounts"), isA(Account.class));
+       verifyNoMoreInteractions(model);
+
+    }
+
+    @Test
+    public void registerClientPage_return_value_Test(){
+        String expected = "/register";
+        String actual = controller.registerClientPage(model);
+
+        assertEquals(expected,actual);
+    }
 
 
+
+    @Test
+    public void registerClientPage_param_value_in_model_Test(){
+
+       controller.registerClientPage(model);
+        verify(model).addAttribute(eq("client"), isA(Client.class));
+        verifyNoMoreInteractions(model);
+
+    }
+
+    @Test
+    public void registerClient_return_value_hasErrors_True_Test(){
+        BindingResult bindingResult  = mock(BindingResult.class);
+        when(bindingResult.hasErrors()).thenReturn(true);
+        String expected = "/register";
+        String actual = controller.registerClient(new Client(),bindingResult);
+        assertEquals(expected,actual);
+
+
+    }
+    @Test
+    public void registerClient_return_value_register_hasErrors_False_Test(){
+        BindingResult bindingResult  = mock(BindingResult.class);
+        when(bindingResult.hasErrors()).thenReturn(false);
+        String expected = "redirect:/clients";
+        String actual = controller.registerClient(new Client(),bindingResult);
+        assertEquals(expected,actual);
+
+
+    }
+
+    @Test
+    public void registerClient_save_Test(){
+        BindingResult bindingResult  = mock(BindingResult.class);
+        when(bindingResult.hasErrors()).thenReturn(false);
+
+        controller.registerClient(new Client(),bindingResult);
+        verify(controller.getClientService()).save(isA(Client.class));
+        verifyNoMoreInteractions(controller.getClientService());
+
+    }
+
+    @Test
+    public  void deleteClient_return_value_Test(){
+        String expected = "redirect:/clients";
+        String actual = controller.deleteClient(anyLong());
+        assertEquals(expected,actual);
+
+    }
+
+    @Test
+    public  void deleteClient_Test(){
+
+        controller.deleteClient(anyLong());
+
+        verify(controller.getClientService()).deleteById(anyLong());
+        verifyNoMoreInteractions(controller.getClientService());
+
+    }
+
+
+    @Test
+    public void updateClient_DownPage_return_value_Test(){
+        String expected =  "/editClient";
+        String actual = controller.updateClient(anyLong(),model);
+
+        assertEquals(expected,actual);
+    }
+    @Test
+    public void updateClient_DownPage_param_value_in_model_Test(){
+        when(controller.getClientService().findById(anyLong())).thenReturn(new Client());
+        controller.updateClient(anyLong(),model);
+
+        verify(model).addAttribute(eq("client"),isA(Client.class));
+    }
+
+    @Test public void updateClient_return_value_hasErrors_False_Test(){
+        BindingResult bindingResult = mock(BindingResult.class);
+        when(bindingResult.hasErrors()).thenReturn(false);
+        Client client = new Client();
+        client.setId(1);
+        String expected =  "redirect:/client/" + client.getId();
+        String actual = controller.updateClient(client,bindingResult);
+        assertEquals(expected,actual);
+    }
+    @Test public void updateClient_return_value_hasErrors_True_Test(){
+        BindingResult bindingResult = mock(BindingResult.class);
+        when(bindingResult.hasErrors()).thenReturn(true);
+        Client client = new Client();
+        String expected =  "/update/" + client.getId();
+        String actual = controller.updateClient(client,bindingResult);
+        assertEquals(expected,actual);
+    }
+
+    @Test public void updateClient_Test(){
+        BindingResult bindingResult = mock(BindingResult.class);
+        when(bindingResult.hasErrors()).thenReturn(false);
+        Client client = new Client();
+        controller.updateClient(client,bindingResult);
+
+        verify(controller.getClientService()).update(isA(Client.class));
+        verifyNoMoreInteractions(controller.getClientService());
+    }
 
 
 
