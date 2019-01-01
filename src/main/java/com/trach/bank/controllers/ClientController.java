@@ -20,7 +20,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Controller
-
 public class ClientController {
 
     private ClientService clientService;
@@ -35,7 +34,7 @@ public class ClientController {
     }
 
     @RequestMapping(value = "/")
-    public String index() {
+    public String homePage() {
         return "/index";
 
     }

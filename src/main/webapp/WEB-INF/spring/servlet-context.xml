@@ -16,7 +16,7 @@
 
     <annotation-driven validator="validator"/>
 
-    <resources location="/, classpath:/META-INF/web-resources/" mapping="/resources/**"/>
+    <resources location="/, classpath:/META-INF/web-resource/" mapping="/resources/**"/>
 
     <default-servlet-handler/>
     <context:component-scan base-package="com.trach.bank"/>
