@@ -92,7 +92,6 @@ public class ClientController {
 
     @RequestMapping(value = "/transfer")
     public String transfer(@ModelAttribute TransferDTO transferDto) {
-        System.out.println(transferDto);
         transfer.transfer(transferDto);
         return "redirect:/client/" + transferDto.getIdSender();
     }
