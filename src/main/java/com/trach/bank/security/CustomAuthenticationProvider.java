@@ -4,6 +4,7 @@ import com.trach.bank.model.Authority;
 import com.trach.bank.model.Client;
 import com.trach.bank.model.Group;
 import com.trach.bank.services.interfaces.ClientService;
+import javassist.NotFoundException;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,6 +22,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         Client client = clientService.getByLogin(authentication.getName());
+
         String password = authentication.getCredentials().toString();
         String encodedPassword = client.getPassword();
         if(!(encoder.matches(password,encodedPassword))){

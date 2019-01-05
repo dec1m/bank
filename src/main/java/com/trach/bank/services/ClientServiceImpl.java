@@ -5,12 +5,13 @@ import com.trach.bank.model.Client;
 import com.trach.bank.model.Group;
 import com.trach.bank.services.interfaces.ClientService;
 import com.trach.bank.services.interfaces.GroupService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.List;
 
 
 public class ClientServiceImpl implements ClientService {
-
+    private BCryptPasswordEncoder encoder;
     private ClientDao clientDao;
 
     private GroupService groupService;
@@ -46,6 +47,7 @@ public class ClientServiceImpl implements ClientService {
     public void save(Client client) {
         Group group = groupService.findGroupByName("User");
         client.setGroup(group);
+        client.setPassword(encoder.encode(client.getPassword()));
         clientDao.save(client);
 
     }
@@ -84,4 +86,11 @@ public class ClientServiceImpl implements ClientService {
 
     }
 
+    public BCryptPasswordEncoder getEncoder() {
+        return encoder;
+    }
+
+    public void setEncoder(BCryptPasswordEncoder encoder) {
+        this.encoder = encoder;
+    }
 }
