@@ -24,12 +24,15 @@ public class TransferServiceImpl implements TransferService {
         countMoneyToTransfer = dto.getCountMoney();
         Client clientTarget = clientService.findById(dto.getIdTarget());
         Client clientSender = clientService.findById(dto.getIdSender());
-
+//TODO EXCEPTION, write new
         if(clientSender == null || clientTarget == null) {
             throw new IllegalArgumentException("clientSender == null OR clientTarget == null");
         }
         if(clientSender.getAccount().getMoney() < countMoneyToTransfer){
             throw new IllegalArgumentException("Not enough money in the account");
+        }
+        if(clientSender.equals(clientTarget)){
+            throw new IllegalArgumentException("it is forbidden to transfer to yourself");
         }
 
 

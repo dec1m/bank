@@ -7,9 +7,7 @@ import com.trach.bank.security.UserDetailsImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.time.LocalDate;
-
 import static junit.framework.TestCase.assertEquals;
 import static org.mockito.Mockito.*;
 
