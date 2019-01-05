@@ -23,8 +23,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         Client client = clientService.getByLogin(authentication.getName());
         String password = authentication.getCredentials().toString();
         String encodedPassword = client.getPassword();
-        System.out.println(password + " __Simple");
-        System.out.println(encodedPassword + " __ENCODED");
         if(!(encoder.matches(password,encodedPassword))){
             throw new BadCredentialsException("Credentials invalid ");
 

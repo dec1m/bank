@@ -5,9 +5,9 @@
     <import resource="datasource-test.xml"/>
     <import resource="hibernate-datasource-test.xml"/>
 
-    <bean id="clientDaoJdbcTemplate" class="com.trach.bank.dao.ClientDaoJdbcTemplate">
-        <property name="dataSource" ref="dataSource"/>
-    </bean>
+    <!--<bean id="clientDaoJdbcTemplate" class="com.trach.bank.dao.ClientDaoJdbcTemplate">-->
+        <!--<property name="dataSource" ref="dataSource"/>-->
+    <!--</bean>-->
     <bean id="clientDaoHibernate" class="com.trach.bank.dao.ClientDaoHibernate">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>

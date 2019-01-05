@@ -10,13 +10,21 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 public class ClientDetailsServiceImpl implements UserDetailsService {
 
-   @Autowired
+
+    @Autowired
    private ClientDao clientDao;
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
         Client client = clientDao.findByLogin(login);
         return new UserDetailsImpl(client);
+    }
+    public ClientDao getClientDao() {
+        return clientDao;
+    }
+
+    public void setClientDao(ClientDao clientDao) {
+        this.clientDao = clientDao;
     }
 
 }

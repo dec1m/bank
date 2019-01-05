@@ -12,6 +12,9 @@ import java.util.*;
 public class UserDetailsImpl implements UserDetails  {
 
     private final Set<GrantedAuthority> authorities = new HashSet<>();
+
+
+
     private Client client;
 
 
@@ -61,12 +64,14 @@ public class UserDetailsImpl implements UserDetails  {
 
         Group group = client.getGroup();
         Authority authority;
-            for(int countAuthoritiesInGroup = 0; countAuthoritiesInGroup < group.getAuthorities().size(); countAuthoritiesInGroup++){
-                authority = group.getAuthorities().get(countAuthoritiesInGroup);
+            for(int i = 0; i < group.getAuthorities().size(); i++){
+                authority = group.getAuthorities().get(i);
                 authorities.add(new GrantedAuthorityImpl(authority));
             }
 
     }
+
+
 
 
 

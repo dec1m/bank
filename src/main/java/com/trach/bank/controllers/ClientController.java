@@ -83,18 +83,7 @@ public class ClientController {
         return "redirect:/clients";
     }
 
-    @RequestMapping(value = "/account/transfer")
-    public String transferPage(Model model) {
-        TransferDTO transferDto = new TransferDTO();
-        model.addAttribute("transferDto",transferDto );
-        return "/transfer";
-    }
 
-    @RequestMapping(value = "/transfer")
-    public String transfer(@ModelAttribute TransferDTO transferDto) {
-        transfer.transfer(transferDto);
-        return "redirect:/client/" + transferDto.getIdSender();
-    }
 
     @GetMapping("/delete/{id}")
     public String deleteClient(@PathVariable("id") long id) {
