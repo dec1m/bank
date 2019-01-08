@@ -1,18 +1,28 @@
 package com.trach.bank.dto;
 
 
+import org.springframework.context.annotation.Scope;
+
 import java.util.Objects;
 
+@Scope("session")
 public class TransferDTO {
+//todo validator and messae
 
+    private  long idTarget;
 
-    private long idTarget;
-    private long idSender;
+    private  long idSender;
+
     private int countMoney;
+
 
 
     public long getIdTarget() {
         return idTarget;
+    }
+
+    public void setIdSender(long idSender) {
+        this.idSender = idSender;
     }
 
     public void setIdTarget(long idTarget) {
@@ -23,9 +33,6 @@ public class TransferDTO {
         return idSender;
     }
 
-    public void setIdSender(long idSender) {
-        this.idSender = idSender;
-    }
 
     public int getCountMoney() {
         return countMoney;

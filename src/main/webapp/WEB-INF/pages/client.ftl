@@ -42,7 +42,7 @@
         <tr>
             <td>${client.account.id}</td>
             <td>${client.account.money}</td>
-            <td><a href="/account/transfer"> <@spring.message "label_send"/></a></td>
+            <td><a href="/transfer"> <@spring.message "label_send"/></a></td>
         </tr>
 
     </table>

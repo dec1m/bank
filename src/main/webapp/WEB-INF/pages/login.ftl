@@ -12,7 +12,7 @@
 
 </head>
 <body>
-<form action="/j_spring_security_check" method="post">
+<form action="/check" method="post">
     <label for="client_login">Username</label>
     <input type="text"  name="client_login"><br/>
     <label for="client_password">Password</label>

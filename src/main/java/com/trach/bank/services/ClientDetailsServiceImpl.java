@@ -17,6 +17,7 @@ public class ClientDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
         Client client = clientDao.findByLogin(login);
+
         return new UserDetailsImpl(client);
     }
     public ClientDao getClientDao() {

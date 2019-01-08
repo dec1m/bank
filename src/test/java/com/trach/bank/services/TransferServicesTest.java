@@ -1,6 +1,7 @@
 package com.trach.bank.services;
 
 import com.trach.bank.dto.TransferDTO;
+import com.trach.bank.exceptions.transfer.TransferException;
 import com.trach.bank.model.Account;
 import com.trach.bank.model.Client;
 import com.trach.bank.services.interfaces.ClientService;
@@ -25,18 +26,15 @@ public class TransferServicesTest {
         transferService = new TransferServiceImpl();
         transferService.setClientService(service);
         transferDTO = new TransferDTO();
-
-
-
-        transferDTO.setIdSender(idSender);
         transferDTO.setIdTarget(idTarget);
+        transferDTO.setIdSender(idSender);
         transferDTO.setCountMoney(countMoneyToTransfer);
 
 
     }
 
     @Test
-    public void transfer_logic_Test(){
+    public void transfer_logic_Test() throws TransferException {
         Client sender = new Client();
         sender.setId(idSender);
         Account accountSender = new Account();
@@ -61,8 +59,8 @@ public class TransferServicesTest {
 
 
     }
-    @Test(expected = IllegalArgumentException.class )
-    public void transfer_Not_enough_money_in_the_account_Test(){
+    @Test(expected = TransferException.class )
+    public void transfer_Not_enough_money_in_the_account_Test() throws TransferException {
         Client sender = new Client();
         sender.setId(idSender);
         Account accountSender = new Account();
@@ -84,12 +82,12 @@ public class TransferServicesTest {
 
       }
 
-    @Test(expected = IllegalArgumentException.class )
-    public void transfer_Not_found_client_Test(){
+    @Test(expected = TransferException.class )
+    public void transfer_Not_found_client_Test() throws TransferException {
         transferService.transfer(transferDTO);
     }
-    @Test(expected = IllegalArgumentException.class )
-    public void transfer_yourself_Test(){
+    @Test(expected = TransferException.class )
+    public void transfer_yourself_Test() throws TransferException {
         Client sender = new Client();
         sender.setId(idSender);
         sender.setLogin("Еня");

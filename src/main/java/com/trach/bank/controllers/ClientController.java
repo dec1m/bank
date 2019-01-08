@@ -22,7 +22,6 @@ import java.util.Map;
 public class ClientController {
 
     private ClientService clientService;
-    private TransferService transfer;
 
 
     @InitBinder
@@ -114,14 +113,7 @@ public class ClientController {
     }
 
 
-    public TransferService getTransfer() {
-        return transfer;
-    }
 
-    @Autowired
-    public void setTransfer(TransferService transfer) {
-        this.transfer = transfer;
-    }
 
     public ClientService getClientService() {
         return clientService;

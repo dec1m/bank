@@ -2,6 +2,7 @@ package com.trach.bank.services;
 
 
 import com.trach.bank.dto.TransferDTO;
+import com.trach.bank.exceptions.transfer.TransferException;
 import com.trach.bank.model.Client;
 import com.trach.bank.services.interfaces.ClientService;
 import com.trach.bank.services.interfaces.TransferService;
@@ -9,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 public class TransferServiceImpl implements TransferService {
-    private Client clientSender;
     private long idSender;
     private long idTarget;
     private int countMoneyToTransfer;
@@ -18,21 +18,22 @@ public class TransferServiceImpl implements TransferService {
     private ClientService clientService;
 
     @Override
-    public void transfer(TransferDTO dto) {
+    public void transfer(TransferDTO dto) throws TransferException {
         idSender = dto.getIdSender();
         idTarget = dto.getIdTarget();
         countMoneyToTransfer = dto.getCountMoney();
-        Client clientTarget = clientService.findById(dto.getIdTarget());
-        Client clientSender = clientService.findById(dto.getIdSender());
-//TODO EXCEPTION, write new
+        Client clientTarget = clientService.findById(idTarget);
+        Client clientSender = clientService.findById(idSender);
+
+
         if(clientSender == null || clientTarget == null) {
-            throw new IllegalArgumentException("clientSender == null OR clientTarget == null");
+            throw new TransferException("clientSender == null OR clientTarget == null");
         }
         if(clientSender.getAccount().getMoney() < countMoneyToTransfer){
-            throw new IllegalArgumentException("Not enough money in the account");
+            throw new TransferException("Not enough money in the account");
         }
         if(clientSender.equals(clientTarget)){
-            throw new IllegalArgumentException("it is forbidden to transfer to yourself");
+            throw new TransferException("it is forbidden to transfer to yourself");
         }
 
 

@@ -4,7 +4,6 @@ import com.trach.bank.model.Authority;
 import com.trach.bank.model.Client;
 import com.trach.bank.model.Group;
 import com.trach.bank.services.interfaces.ClientService;
-import javassist.NotFoundException;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,17 +11,20 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
+import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
 public class CustomAuthenticationProvider implements AuthenticationProvider {
     private  ClientService clientService;
     private BCryptPasswordEncoder encoder;
+
+
+
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        Client client = clientService.getByLogin(authentication.getName());
-
+           Client client = clientService.getByLogin(authentication.getName());
+        //TODO If client == null, throws exception. Zrobi wos
         String password = authentication.getCredentials().toString();
         String encodedPassword = client.getPassword();
         if(!(encoder.matches(password,encodedPassword))){
@@ -64,4 +66,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     public void setEncoder(BCryptPasswordEncoder encoder) {
         this.encoder = encoder;
     }
+
+
 }

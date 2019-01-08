@@ -1,6 +1,7 @@
 package com.trach.bank.dao;
 
 
+import com.trach.bank.model.Account;
 import com.trach.bank.model.Client;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -8,8 +9,11 @@ import org.junit.Test;
 import org.springframework.context.support.GenericXmlApplicationContext;
 import javax.persistence.NoResultException;
 import java.time.LocalDate;
+
+
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+
 
 
 public class ClientDaoHibernate_Test {
@@ -75,6 +79,14 @@ public class ClientDaoHibernate_Test {
         Client actual = dao.findByLogin("decim");
         assertEquals(client,actual);
     }
+    @Test(expected = NoResultException.class)
+    public void getByLogin_null_Test(){
+
+
+        Client actual = dao.findByLogin("null");
+
+    }
+
 
     //Dependent  dao.findByLogin();
     @Test
@@ -131,28 +143,7 @@ public class ClientDaoHibernate_Test {
         assertEquals(client,actual);
     }
 
-//    @Test
-//    public void getClientByAccountID_Test(){
-//        Client client = new Client();
-//
-//        client.setBirthDay(LocalDate.of(1994,7,13));
-//        client.setFirstName("getClientByAccountID_Test");
-//        client.setLastName("getClientByAccountID_Test");
-//        client.setPassword("getClientByAccountID_Test");
-//        client.setLogin("getClientByAccountID_Test");
-//        client.setPhone_number(67389042);
-//        Account account = new Account(1,client);
-//        List<Account> accountList =  new ArrayList<Account>();
-//        accountList.add(account);
-//        client.setAccountList(accountList);
-//
-//        dao.save(client);
-//
-//        Client clientByAccountID = dao.findClientByAccountID(1);
-//
-//
-//        assertEquals(clientByAccountID.getAccountList().get(0),account);
-//     }
+
 
 
 }

@@ -9,19 +9,21 @@
              http://www.springframework.org/schema/security/spring-security-4.2.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 <http use-expressions="true">
+    <intercept-url pattern="/transfer" access="isAuthenticated()"/>
     <intercept-url pattern="/clients" access="hasRole('ROLE_ADMIN')"/>
     <intercept-url pattern="/update/**" access="hasRole('ROLE_ADMIN')"/>
     <intercept-url pattern="/client" access="hasRole({'ROLE_USER','ROLE_ADMIN'})"/>
-    <access-denied-handler error-page="/access"/>
+    <access-denied-handler error-page="/denied"/>
     <form-login
         login-page="/login"
-        login-processing-url="/j_spring_security_check"
+        login-processing-url="/check"
         default-target-url="/"
         authentication-failure-url="/login"
         username-parameter="client_login"
         password-parameter="client_password"/>
 
-        <csrf disabled="true"/>
+    <!--TODO-->   <csrf disabled="true"/>
+
     <logout
             logout-success-url="/login"
             logout-url="/perform_logout"

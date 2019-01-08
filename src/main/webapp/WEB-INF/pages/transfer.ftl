@@ -9,13 +9,11 @@
 </head>
 <body>
 
-<@sf.form action="/transfer" method="post" name="transfer" modelAttribute="transferDto" >
+<@sf.form action="/transferTo" method="post" name="transfer" modelAttribute="transferDto" >
 <label for="money"><@spring.message "label_money"/></label><br/>
    <@sf.input path="countMoney" /><br/>
-<label for="whom"><@spring.message "label_you_account"/></label><br/>
-   <@sf.input path="idSender" /><br/>
-<label for="whom"><@spring.message "label_whom_id"/></label><br/>
-   <@sf.input path="idTarget" /><br/>
+<label  for="whom"><@spring.message "label_whom_id"/></label><br/>
+   <@sf.input  path="idTarget"/><br/>
 <input type="submit" value="<@spring.message "label_transfer"/>"><br/>
 </@sf.form>
 </body>
