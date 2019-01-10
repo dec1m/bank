@@ -21,7 +21,7 @@
     </tr>
 
     <tr>
-        <td><a href="client/${client.id}">${client.id}</a></td>
+        <td>${client.id}</td>
         <td>${client.firstName}</td>
         <td>${client.lastName}</td>
         <td>${client.phone_number}</td>

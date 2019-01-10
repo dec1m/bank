@@ -27,7 +27,16 @@
                 <a class="nav-link" href="/login"><@spring.message "label_auth"/></span></a>
             </li>
             </@security.authorize>
+
             <@security.authorize access="isAuthenticated()">
+                <li class="nav-item ">
+                    <a class="nav-link" href="/client/${id}"><@spring.message "label_my_account"/></span></a>
+
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="/transfer"><@spring.message "transfers"/></span></a>
+
+                </li>
             <li class="nav-item ">
                 <a class="nav-link" href="/perform_logout"><@spring.message "label_out"/></span></a>
             </li>
