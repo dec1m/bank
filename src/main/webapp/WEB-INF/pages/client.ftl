@@ -1,11 +1,9 @@
 <#import "/spring.ftl" as spring/>
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title><@spring.message "label_client_info"/></title>
+<#import  "templates/common.ftl" as c>
 
-</head>
+
+<@c.page>
+
 <body>
 
 
@@ -51,4 +49,5 @@
 
 
 </body>
-</html>
+
+</@c.page>

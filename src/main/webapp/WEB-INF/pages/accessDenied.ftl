@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<h1>доступ запрещен</h1>
-</body>
-</html>
+<#import  "templates/common.ftl" as c>
+
+
+<@c.page>
+    <h1>доступ запрещен</h1>
+</@c.page>

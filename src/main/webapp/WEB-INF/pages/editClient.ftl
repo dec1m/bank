@@ -1,12 +1,8 @@
 <#import "/spring.ftl" as spring/>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8"/>
-    <title><@spring.message "label_register"/></title>
+<#import  "templates/common.ftl" as c>
 
-</head>
-<body>
+
+<@c.page>
 
 <h2><@spring.message "label_update"/></h2>
 
@@ -24,6 +20,7 @@
 
 
 
+    <#--todo-->
     <#--<p><@spring.message "label_authority"/></p>-->
 
     <#--<select   name="role"   size="1" >-->
@@ -41,5 +38,4 @@
     <input title="<@spring.message "label_birth_day"/>"  type="text"   name="birthDay"  value="${client.birthDay}">
     <input type="submit" value="<@spring.message "label_update"/>">
 </form>
-</body>
-</html>
+</@c.page>

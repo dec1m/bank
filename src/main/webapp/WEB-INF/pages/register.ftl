@@ -1,17 +1,11 @@
 <#assign sf=JspTaglibs["http://www.springframework.org/tags/form"]>
 <#import "/spring.ftl" as spring/>
-<!DOCTYPE html>
-<html xmlns:sf="http://www.w3.org/1999/html">
+<#import  "templates/common.ftl" as c>
 
 
+<@c.page>
 
 
-<head>
-    <meta charset="UTF-8"/>
-    <title><@spring.message "label_register"/></title>
-
-</head>
-<body>
 <h2><@spring.message "label_register"/></h2>
 
 <@sf.form action="/register" method="post" name="client" modelAttribute="client" >
@@ -50,8 +44,4 @@
   </div>
 <input type="submit" value="<@spring.message "label_register"/>"/>
 </@sf.form>
-
-
-
-</body>
-</html>
+</@c.page>
