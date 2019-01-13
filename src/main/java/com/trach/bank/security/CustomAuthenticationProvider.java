@@ -10,7 +10,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import javax.persistence.NoResultException;
 import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
@@ -23,8 +26,15 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-           Client client = clientService.getByLogin(authentication.getName());
-        //TODO If client == null, throws exception. Zrobi wos
+        Client client = null;
+        try {
+
+             client = clientService.getByLogin(authentication.getName());
+
+        }catch (NoResultException e){
+            throw new UsernameNotFoundException("Пользователь не найден");
+        }
+
         String password = authentication.getCredentials().toString();
         String encodedPassword = client.getPassword();
         if(!(encoder.matches(password,encodedPassword))){

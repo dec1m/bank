@@ -47,6 +47,8 @@ public class TransferController {
 
         transferDto.setIdSender(activeClient.getId());
         transfer.transfer(transferDto);
+        int i = 1;
+        System.out.println(i);
         return "redirect:/client/" + transferDto.getIdSender();
     }
 
