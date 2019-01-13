@@ -69,7 +69,7 @@ public class Client implements Serializable {
 
     @Id
     @Column(name = "id")
-    @NotNull
+    @NotNull(message = "{not_empty}")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public long getId() {
         return id;
@@ -80,7 +80,7 @@ public class Client implements Serializable {
     }
 
     @Column(name = "first_name")
-    @NotNull
+    @NotNull(message = "{not_empty}")
     @Size(min = 2, max = 15, message = "{firstName.size.error}")
     public String getFirstName() {
         return firstName;
@@ -92,7 +92,7 @@ public class Client implements Serializable {
     }
 
     @Column(name = "last_name")
-    @NotNull
+    @NotNull(message = "{not_empty}")
     @Size(min = 2, max = 15, message = "{lastName.size.error}")
     public String getLastName() {
         return lastName;
@@ -104,7 +104,7 @@ public class Client implements Serializable {
 
     @Column(name = "password")
     @Size(min = 6, max = 60, message = "{password.size.error}")
-    @NotNull
+    @NotNull(message = "{not_empty}")
     public String getPassword() {
         return password;
     }
@@ -125,7 +125,7 @@ public class Client implements Serializable {
     }
 
     @Column(name = "birth_day")
-    @NotNull
+    @NotNull(message = "{not_empty}")
     public LocalDate getBirthDay() {
         return birthDay;
     }
@@ -154,7 +154,7 @@ public class Client implements Serializable {
         this.group = group;
     }
 
-    @NotNull
+    @NotNull(message = "{not_empty}")
     @Size(min = 4, max = 15, message = "{error_login}")
     public String getLogin() {
         return login;

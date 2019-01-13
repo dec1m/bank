@@ -69,7 +69,7 @@ public class ClientController {
     }
 
     @PostMapping("/register")
-    public String registerClient(@ModelAttribute Client client, BindingResult bindingResult) {
+    public String registerClient(@ModelAttribute @Valid  Client client, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "/register";
         }
