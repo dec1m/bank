@@ -31,8 +31,17 @@
         <property name="groupDao" ref="groupDao"/>
 
     </bean>
+
     <bean id="transfer" class="com.trach.bank.services.TransferServiceImpl">
-        <property name="clientService" ref="clientService"/>
+        <property name="accountService" ref="accountService"/>
+    </bean>
+
+    <bean id="accountDao" class="com.trach.bank.dao.HibernateAccountDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="accountService" class="com.trach.bank.services.AccountServiceImpl">
+        <property name="dao" ref="accountDao"/>
     </bean>
 
 </beans>

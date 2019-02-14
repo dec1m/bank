@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.ui.Model;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.validation.BindingResult;
 import static junit.framework.TestCase.assertEquals;
@@ -79,13 +80,19 @@ public class ClientControllerTest {
     @Test
     public void showClientPage_param_value_in_model_Test(){
         Client clientMock = mock(Client.class);
+        List<Account> accounts = new ArrayList<>();
+        Account account = new Account();
+        account.setMoney(100);
+        account.setClient(clientMock);
+        accounts.add(account);
+
         when(controller.getClientService().getByLogin(anyString())).thenReturn(clientMock);
-        when(clientMock.getAccount()).thenReturn(new Account());
+        when(clientMock.getAccounts()).thenReturn(accounts);
 
         controller.showClientPage("nickname",model);
 
        verify(model).addAttribute(eq("client"), isA(Client.class));
-       verify(model).addAttribute(eq("accounts"), isA(Account.class));
+       verify(model).addAttribute(eq("accounts"), isA(List.class));
        verifyNoMoreInteractions(model);
 
     }
@@ -163,14 +170,14 @@ public class ClientControllerTest {
     @Test
     public void updateClient_DownPage_return_value_Test(){
         String expected =  "/editClient";
-        String actual = controller.updateClient(anyLong(),model);
+        String actual = controller.updateClientPage(anyLong(),model);
 
         assertEquals(expected,actual);
     }
     @Test
     public void updateClient_DownPage_param_value_in_model_Test(){
         when(controller.getClientService().findById(anyLong())).thenReturn(new Client());
-        controller.updateClient(anyLong(),model);
+        controller.updateClientPage(anyLong(),model);
 
         verify(model).addAttribute(eq("client"),isA(Client.class));
     }

@@ -5,25 +5,41 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
+@SuppressWarnings("ALL")
 @Table(name = "accounts")
+@NamedQueries({
+        @NamedQuery(name = Account.DELETE_BY_ID, query = "DELETE FROM Account a WHERE a.id = :id"),
+        @NamedQuery(name = Account.GET_BY_ID, query = "SELECT a FROM Account a WHERE a.id = :id"),
+
+})
 public class Account  implements Serializable {
     private long id;
     private int money;
     private  Client client;
+    private Currency currency;
+
+
+    public static final String DELETE_BY_ID = "ACCOUNT.DELETE_BY_ID";
+    public static final String GET_BY_ID = "ACCOUNT.GET_BY_ID";
 
     public Account() {
     }
 
-    public Account(int money, Client client) {
+    public Account(int money, Client client,Currency currency) {
+        this.currency = currency;
         this.money = money;
         this.client = client;
     }
 
-    public Account(long id, int money, Client client) {
+    public Account(long id, int money, Client client,Currency currency) {
+        this.currency = currency;
         this.id = id;
         this.money = money;
         this.client = client;
     }
+
+
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,13 +58,22 @@ public class Account  implements Serializable {
     public void setMoney(int money) {
         this.money = money;
     }
-    @OneToOne(mappedBy = "account", fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="client_id")
     public Client getClient() {
         return client;
     }
 
     public void setClient(Client client) {
         this.client = client;
+    }
+
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
     }
 
     @Override
@@ -75,4 +100,5 @@ public class Account  implements Serializable {
                 ", money=" + money +
                 '}';
     }
+
 }

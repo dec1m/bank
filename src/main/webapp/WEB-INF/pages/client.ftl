@@ -29,22 +29,38 @@
     </tr>
 
 
-
+    <#if accounts??>
     <table>
 
         <tr>
             <th><@spring.message "label_number_account"/></th>
             <th><@spring.message "label_money"/></th>
+            <th><@spring.message "label_currency"/></th>
         </tr>
 
+
+
+
+
+            <#list accounts as account>
         <tr>
-            <td>${client.account.id}</td>
-            <td>${client.account.money}</td>
-            <td><a href="/transfer"> <@spring.message "label_send"/></a></td>
+            <td>${account.id}</td>
+            <td>${account.money}</td>
+            <td>${account.currency}</td>
+            <td><a href="account/delete/#{client.id}/#{account.id}"><@spring.message "label_delete"/> </a></td>
+
+            <td><a href="/transfer/${account.id}"> <@spring.message "label_send"/></a></td>
         </tr>
+            </#list>
+
+
+
+
+
 
     </table>
-
+    </#if>
+    <a href="#{client.id}/account/new"><@spring.message"label_open_new_account"/></a>
 
 
 

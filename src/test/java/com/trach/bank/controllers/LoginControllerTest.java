@@ -10,12 +10,9 @@ import static junit.framework.TestCase.assertEquals;
 public class LoginControllerTest {
 
     private LoginController controller;
-    private ModelAndView model;
     @Before
     public void setUp(){
         controller = new LoginController();
-        model = mock(ModelAndView.class);
-
     }
 
     @Test

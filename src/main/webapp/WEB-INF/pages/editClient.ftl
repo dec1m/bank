@@ -20,16 +20,6 @@
 
 
 
-    <#--todo-->
-    <#--<p><@spring.message "label_authority"/></p>-->
-
-    <#--<select   name="role"   size="1" >-->
-        <#--<option  value="<@spring.message "admin"/>"><@spring.message "label_admin"/></option>-->
-        <#--<option  selected value="<@spring.message "user"/>"><@spring.message "label_user"/></option>-->
-        <#--<option value="<@spring.message "anonymous"/>"><@spring.message "label_anonymous"/></option>-->
-    <#--</select>-->
-
-
 
 
     <p><@spring.message "label_phone_number"/></p>

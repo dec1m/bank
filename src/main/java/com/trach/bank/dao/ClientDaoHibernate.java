@@ -85,6 +85,7 @@ public class ClientDaoHibernate implements ClientDao  {
     }
 
     @Override
+    //TODO NATIVE QUERY IS BAD
     public Client findClientByAccountID(long id) {
         long clientId = (long) sessionFactory
                 .getCurrentSession()

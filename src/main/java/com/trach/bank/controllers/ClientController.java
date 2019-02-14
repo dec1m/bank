@@ -46,7 +46,9 @@ public class ClientController {
 
     @RequestMapping("/client/{id}")
     public String showClient(@PathVariable("id") long id, Model model) {
-        model.addAttribute("client", clientService.findById(id));
+        Client client = clientService.findById(id);
+        model.addAttribute("client", client);
+
         return "/client";
 
     }
@@ -55,7 +57,7 @@ public class ClientController {
     public String showClientPage(@PathVariable("login") String login, Model model) {
         Client client = clientService.getByLogin(login);
         model.addAttribute("client", client);
-        model.addAttribute("accounts", client.getAccount());
+        model.addAttribute("accounts", client.getAccounts());
         return "/client";
 
     }
@@ -90,7 +92,7 @@ public class ClientController {
     }
 
     @GetMapping("update/{id}")
-    public String updateClient(@PathVariable("id") long id, Model model) {
+    public String updateClientPage(@PathVariable("id") long id, Model model) {
         Client client = clientService.findById(id);
         Map<String, String> role = new HashMap<>();
         role.put("User", "ROLE_USER");

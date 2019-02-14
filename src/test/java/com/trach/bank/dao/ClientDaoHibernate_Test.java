@@ -1,7 +1,7 @@
 package com.trach.bank.dao;
 
 
-import com.trach.bank.model.Account;
+
 import com.trach.bank.model.Client;
 import org.junit.Before;
 import org.junit.BeforeClass;

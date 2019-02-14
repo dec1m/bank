@@ -37,8 +37,9 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
         String password = authentication.getCredentials().toString();
         String encodedPassword = client.getPassword();
+
         if(!(encoder.matches(password,encodedPassword))){
-            throw new BadCredentialsException("Credentials invalid ");
+            throw new BadCredentialsException("Неверный пароль");
 
         }
         return new UsernamePasswordAuthenticationToken(client,client.getPassword(),getAuthorities(client));

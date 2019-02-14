@@ -3,52 +3,53 @@ package com.trach.bank.services;
 
 import com.trach.bank.dto.TransferDTO;
 import com.trach.bank.exceptions.transfer.TransferException;
-import com.trach.bank.model.Client;
-import com.trach.bank.services.interfaces.ClientService;
+import com.trach.bank.model.Account;
+import com.trach.bank.services.interfaces.AccountService;
 import com.trach.bank.services.interfaces.TransferService;
 import org.springframework.transaction.annotation.Transactional;
 
 
 public class TransferServiceImpl implements TransferService {
-    private long idSender;
-    private long idTarget;
+
     private int countMoneyToTransfer;
 
 
-    private ClientService clientService;
+    private AccountService accountService;
 
     @Override
     public void transfer(TransferDTO dto) throws TransferException {
-        idSender = dto.getIdSender();
-        idTarget = dto.getIdTarget();
+
+        long idAccountSender = dto.getIdSender();
+        long idAccountTarget = dto.getIdTarget();
         countMoneyToTransfer = dto.getCountMoney();
-        Client clientTarget = clientService.findById(idTarget);
-        Client clientSender = clientService.findById(idSender);
+        Account accountTarget = accountService.findById(idAccountTarget);
+        Account accountSender = accountService.findById(idAccountSender);
 
 
-        if(clientSender == null || clientTarget == null) {
+        if(accountSender == null || accountTarget == null) {
             throw new TransferException("clientSender == null OR clientTarget == null");
         }
-        if(clientSender.getAccount().getMoney() < countMoneyToTransfer){
+
+        if(accountSender.getMoney() < countMoneyToTransfer){
             throw new TransferException("Not enough money in the account");
         }
-        if(clientSender.equals(clientTarget)){
+        if(accountSender.equals(accountTarget)){
             throw new TransferException("it is forbidden to transfer to yourself");
         }
 
 
-        transfer(clientTarget,clientSender);
+        transfer(accountTarget,accountSender);
 
 
 
     }
 
     @Transactional
-     void transfer(Client target,Client sender){
-        sender.getAccount().setMoney(sender.getAccount().getMoney() - countMoneyToTransfer); //Withdrawal from the account
-        clientService.update(sender);
-        target.getAccount().setMoney(target.getAccount().getMoney() + countMoneyToTransfer); //Account replenishment
-        clientService.update(target);
+     void transfer(Account target,Account sender){
+        sender.setMoney(sender.getMoney() - countMoneyToTransfer); //Withdrawal from the account
+        accountService.update(sender);
+        target.setMoney(target.getMoney() + countMoneyToTransfer); //Account replenishment
+        accountService.update(target);
     }
 
 
@@ -60,11 +61,13 @@ public class TransferServiceImpl implements TransferService {
         this.countMoneyToTransfer = countMoney;
     }
 
-    public ClientService getClientService() {
-        return clientService;
+
+
+    public AccountService getAccountService() {
+        return accountService;
     }
 
-    public void setClientService(ClientService clientService) {
-        this.clientService = clientService;
+    public void setAccountService(AccountService accountService) {
+        this.accountService = accountService;
     }
 }

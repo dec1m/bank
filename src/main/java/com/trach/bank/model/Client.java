@@ -12,7 +12,7 @@ import java.util.*;
 @NamedQueries({
         @NamedQuery(name = Client.GET_LAST_NAME_BY_ID, query = "SELECT c.firstName FROM Client c WHERE id = :id"),
         @NamedQuery(name = Client.DELETE_BY_ID, query = "DELETE FROM Client c WHERE c.id = :id"),
-        @NamedQuery(name = Client.FIND_ALL_ACCOUNT, query = "SELECT c.account FROM Client c WHERE id = :id"),
+        @NamedQuery(name = Client.FIND_ALL_ACCOUNT, query = "SELECT c.accounts FROM Client c WHERE id = :id"),
         @NamedQuery(name = Client.FIND_ALL, query = "SELECT c FROM Client c"),
         @NamedQuery(name = Client.GET_BY_ID, query = "SELECT c FROM Client c WHERE c.id = :id"),
         @NamedQuery(name = Client.GET_BY_LOGIN, query = "SELECT c FROM Client c WHERE c.login = :login"),
@@ -29,7 +29,7 @@ public class Client implements Serializable {
     private int phone_number;
     private LocalDate birthDay;
     private String login;
-    private Account account;
+    private List<Account> accounts;
     private Group group;
 
     public static final String FIND_BY_ACCOUNT_ID = "CLIENT.FIND_BY_ACCOUNT_ID";
@@ -41,30 +41,37 @@ public class Client implements Serializable {
     public static final String GET_LAST_NAME_BY_ID = "CLIENT.GET_LAST_NAME_BY_ID";
 
     public Client() {
-        account = new Account();
+
+        Account account = new Account();
         account.setMoney(100);
+        account.setCurrency(Currency.USD);
         account.setClient(this);
+        accounts = new ArrayList<Account>();
+        accounts.add(account);
     }
 
     public Client(String firstName, String lastName, String password, int phone_number, String login,
-                  LocalDate birthDay, Account account) {
+                  LocalDate birthDay, List<Account> accounts) {
+        this();
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
         this.phone_number = phone_number;
         this.birthDay = birthDay;
-        this.account = account;
+        this.accounts = accounts;
+
     }
 
     public Client(long id, String firstName, String lastName,
-                  String password, int phone_number, LocalDate birthDay, String login, Account account) {
+                  String password, int phone_number, LocalDate birthDay, String login,List<Account> accounts) {
+        this();
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
         this.phone_number = phone_number;
         this.birthDay = birthDay;
-        this.account = account;
+        this.accounts = accounts;
     }
 
     @Id
@@ -134,15 +141,13 @@ public class Client implements Serializable {
         this.birthDay = birthDay;
     }
 
-
-    @OneToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
-    @JoinColumn(name = "account_id")
-    public Account getAccount() {
-        return account;
+    @OneToMany(mappedBy = "client",fetch = FetchType.EAGER)
+    public List<Account> getAccounts() {
+        return accounts;
     }
 
-    public void setAccount(Account account) {
-        this.account = account;
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
     }
 
     @ManyToOne (fetch = FetchType.EAGER, cascade=CascadeType.ALL)
