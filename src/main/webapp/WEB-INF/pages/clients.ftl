@@ -29,8 +29,8 @@
       <td>${client.login}</td>
       <td>${client.phone_number}</td>
       <td>${client.birthDay}</td>
-      <td><a href="/update/${client.id}"><@spring.message "label_update"/></a></td>
-     <td><a href="/delete/${client.id}"> <@spring.message "label_delete"/></a></td>
+      <td><a href="/client/update/${client.id}"><@spring.message "label_update"/></a></td>
+     <td><a href="/client/delete/${client.id}"> <@spring.message "label_delete"/></a></td>
 
   </tr>
 

@@ -4,7 +4,6 @@ package com.trach.bank.controllers;
 import com.trach.bank.editors.LocalDateEditor;
 import com.trach.bank.model.Client;
 import com.trach.bank.services.interfaces.ClientService;
-import com.trach.bank.services.interfaces.TransferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
@@ -19,6 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Controller
+@RequestMapping(value = "client")
 public class ClientController {
 
     private ClientService clientService;
@@ -31,58 +31,19 @@ public class ClientController {
         binder.registerCustomEditor(String.class, stringTrimmerEditor);
     }
 
-    @RequestMapping(value = "/")
-    public String homePage() {
-        return "/index";
 
-    }
 
-    @RequestMapping(value = "/clients")
-    public String getAllClients(Model model) {
-        model.addAttribute("clients", clientService.findAll());
-        return "/clients";
 
-    }
 
-    @RequestMapping("/client/{id}")
+    @RequestMapping("/{id}")
     public String showClient(@PathVariable("id") long id, Model model) {
         Client client = clientService.findById(id);
         model.addAttribute("client", client);
+        model.addAttribute("accounts",client.getAccounts());
 
         return "/client";
 
     }
-
-    @RequestMapping(value = "/accounts/{login}", method = RequestMethod.GET)
-    public String showClientPage(@PathVariable("login") String login, Model model) {
-        Client client = clientService.getByLogin(login);
-        model.addAttribute("client", client);
-        model.addAttribute("accounts", client.getAccounts());
-        return "/client";
-
-    }
-
-
-
-    @RequestMapping(value = "/register", method = RequestMethod.GET)
-    public String registerClientPage(Model model) {
-        model.addAttribute("client", new Client());
-        return "/register";
-    }
-
-    @PostMapping("/register")
-    public String registerClient(@ModelAttribute @Valid  Client client, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "/register";
-        }
-
-
-        clientService.save(client);
-
-
-        return "redirect:/clients";
-    }
-
 
 
     @GetMapping("/delete/{id}")
@@ -99,7 +60,7 @@ public class ClientController {
         role.put("Admin", "ROLE_ADMIN");
         role.put("Anonymous", "ROLE_ANONYMOUS");
         model.addAttribute("client", client);
-        model.addAttribute(role);
+        model.addAttribute("roles",role);
         return "/editClient";
 
 
@@ -114,6 +75,30 @@ public class ClientController {
         return "redirect:/client/" + client.getId();
     }
 
+    @RequestMapping(value = "/clients")
+    public String getAllClients(Model model) {
+        model.addAttribute("clients", clientService.findAll());
+        return "/clients";
+
+    }
+    @RequestMapping(value = "/register", method = RequestMethod.GET)
+    public String registerClientPage(Model model) {
+        model.addAttribute("client", new Client());
+        return "/register";
+    }
+
+    @PostMapping("/register")
+    public String registerClient(@ModelAttribute @Valid Client client, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "/register";
+        }
+
+
+        clientService.save(client);
+
+
+        return "redirect:/clients";
+    }
 
 
 

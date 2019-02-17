@@ -7,15 +7,15 @@ import com.trach.bank.services.interfaces.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 
 @Controller
+@SessionAttributes("idClient")
+@RequestMapping(value = "/account")
 public class AccountController {
 
     @Autowired
@@ -23,18 +23,20 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
 
-    @RequestMapping(value = "client/{id}/account/new", method = RequestMethod.GET)
-    public String addNewAccountPage(Model model,@PathVariable long id){
+    @RequestMapping(value = "/new/{idClient}", method = RequestMethod.GET)
+    public String addNewAccountPage(Model model, @PathVariable  long idClient,
+                                    HttpSession httpSession){
 
+        httpSession.setAttribute("idClient",idClient);
         model.addAttribute("account",new Account());
-        model.addAttribute("clientId",id);
+        model.addAttribute("clientId",idClient);
 
         return "/newaccount";
     }
 
-    @RequestMapping(value = "account/new/{id}",method = RequestMethod.POST)
-    public String addNewAccount(@Valid @ModelAttribute Account account, @PathVariable long id){
-        Client client = clientService.findById(id);
+    @RequestMapping(value = "/new",method = RequestMethod.POST)
+    public String addNewAccount(@Valid @ModelAttribute Account account, @SessionAttribute long idClient){
+        Client client = clientService.findById(idClient);
         account.setClient(client);
         client.getAccounts().add(account);
         accountService.save(account);
@@ -42,11 +44,11 @@ public class AccountController {
 
         return "redirect:/client/" + client.getId();
     }
-    @RequestMapping(value = "client/account/delete/{id_client}/{id_acc}",method = RequestMethod.GET)
-    public String delete(@PathVariable long id_acc, @PathVariable long id_client){
+    @RequestMapping(value = "/delete/{id_acc}",method = RequestMethod.GET)
+    public String delete(@PathVariable long id_acc,@SessionAttribute long idClient){
         Account account = accountService.findById(id_acc);
         accountService.delete(account);
-        Client client = clientService.findById(id_client);
+        Client client = clientService.findById(idClient);
         client.getAccounts().remove(account);
         return "redirect:/client/" + client.getId();
     }

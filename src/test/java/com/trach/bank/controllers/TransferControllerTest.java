@@ -3,6 +3,7 @@ package com.trach.bank.controllers;
 import com.trach.bank.dto.TransferDTO;
 import com.trach.bank.services.interfaces.TransferService;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.ui.Model;
 import static org.mockito.Mockito.*;
@@ -37,6 +38,11 @@ public class TransferControllerTest {
         verify(model).addAttribute(eq("transferDto"),isA(TransferDTO.class));
 
 
+    }
+    @Test
+    @Ignore
+    public void transfer_logic_Test(){
+        //todo realise method
     }
 
 
