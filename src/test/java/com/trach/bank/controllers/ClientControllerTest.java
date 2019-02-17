@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -22,11 +23,13 @@ public class ClientControllerTest {
     private Model model;
     private BindingResult bindingResult;
     private  Client client;
+    private HttpSession httpSession;
     @Before
     public void setUp(){
         controller = new ClientController();
         controller.setClientService(mock(ClientService.class));
         model = mock(Model.class);
+        httpSession = mock( HttpSession.class);
         bindingResult = mock(BindingResult.class);
        client = new Client();
         client.setId(1);
@@ -42,14 +45,14 @@ public class ClientControllerTest {
     public void showClient_return_value_Test(){
 
         String expected = "/client";
-        String actual = controller.showClient(1L,model);
+        String actual = controller.showClient(1L,model,httpSession);
 
         assertEquals(expected,actual);
     }
 
     @Test
     public void showClient_param_value_in_model_Test(){
-      controller.showClient(1L,model);
+      controller.showClient(1L,model,httpSession);
      verify(model).addAttribute(eq("client"), isA(Client.class));
         //todo isA expected any List, but need List<Account>
         verify(model).addAttribute(eq("accounts"),isA(List.class));

@@ -141,7 +141,7 @@ public class Client implements Serializable {
         this.birthDay = birthDay;
     }
 
-    @OneToMany(mappedBy = "client",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "client",fetch = FetchType.EAGER,cascade=CascadeType.REMOVE)
     public List<Account> getAccounts() {
         return accounts;
     }

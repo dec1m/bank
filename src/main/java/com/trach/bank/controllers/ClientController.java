@@ -12,13 +12,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
 @Controller
-@RequestMapping(value = "client")
 public class ClientController {
 
     private ClientService clientService;
@@ -35,9 +35,10 @@ public class ClientController {
 
 
 
-    @RequestMapping("/{id}")
-    public String showClient(@PathVariable("id") long id, Model model) {
-        Client client = clientService.findById(id);
+    @RequestMapping("client/{id}")
+    public String showClient(@PathVariable("id") long idClient, Model model,  HttpSession httpSession) {
+        httpSession.setAttribute("idClient",idClient);
+        Client client = clientService.findById(idClient);
         model.addAttribute("client", client);
         model.addAttribute("accounts",client.getAccounts());
 
@@ -46,13 +47,13 @@ public class ClientController {
     }
 
 
-    @GetMapping("/delete/{id}")
+    @GetMapping("client/delete/{id}")
     public String deleteClient(@PathVariable("id") long id) {
         clientService.deleteById(id);
         return "redirect:/clients";
     }
 
-    @GetMapping("update/{id}")
+    @GetMapping("client/update/{id}")
     public String updateClientPage(@PathVariable("id") long id, Model model) {
         Client client = clientService.findById(id);
         Map<String, String> role = new HashMap<>();
@@ -66,7 +67,7 @@ public class ClientController {
 
     }
 
-    @PostMapping("/update")
+    @PostMapping("client/update")
     public String updateClient(@Valid @ModelAttribute Client client, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "/update/" + client.getId();
@@ -75,7 +76,7 @@ public class ClientController {
         return "redirect:/client/" + client.getId();
     }
 
-    @RequestMapping(value = "/clients")
+    @RequestMapping(value = "clients")
     public String getAllClients(Model model) {
         model.addAttribute("clients", clientService.findAll());
         return "/clients";

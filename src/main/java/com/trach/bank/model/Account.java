@@ -14,7 +14,7 @@ import java.util.Objects;
 })
 public class Account  implements Serializable {
     private long id;
-    private int money;
+    private long money;
     private  Client client;
     private Currency currency;
 
@@ -25,13 +25,13 @@ public class Account  implements Serializable {
     public Account() {
     }
 
-    public Account(int money, Client client,Currency currency) {
+    public Account(long money, Client client,Currency currency) {
         this.currency = currency;
         this.money = money;
         this.client = client;
     }
 
-    public Account(long id, int money, Client client,Currency currency) {
+    public Account(long id, long money, Client client,Currency currency) {
         this.currency = currency;
         this.id = id;
         this.money = money;
@@ -51,11 +51,11 @@ public class Account  implements Serializable {
         this.id = id;
     }
     @Column(name = "money")
-    public int getMoney() {
+    public long getMoney() {
         return money;
     }
 
-    public void setMoney(int money) {
+    public void setMoney(long money) {
         this.money = money;
     }
     @ManyToOne(fetch=FetchType.LAZY)

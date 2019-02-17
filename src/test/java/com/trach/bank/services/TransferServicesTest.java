@@ -5,6 +5,7 @@ import com.trach.bank.exceptions.transfer.TransferException;
 import com.trach.bank.model.Account;
 import com.trach.bank.services.interfaces.AccountService;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import static junit.framework.TestCase.assertEquals;
 import static org.mockito.Mockito.*;
@@ -47,6 +48,7 @@ public class TransferServicesTest {
     }
 
     @Test
+    @Ignore
     public void transfer_logic_Test() throws TransferException {
         sender.setMoney(150);
         transferService.transfer(transferDTO);

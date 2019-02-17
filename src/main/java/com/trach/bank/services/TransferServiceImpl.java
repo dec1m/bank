@@ -6,13 +6,16 @@ import com.trach.bank.exceptions.transfer.TransferException;
 import com.trach.bank.model.Account;
 import com.trach.bank.services.interfaces.AccountService;
 import com.trach.bank.services.interfaces.TransferService;
+import com.trach.bank.utils.CurrencyConverter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 
 public class TransferServiceImpl implements TransferService {
 
-    private int countMoneyToTransfer;
-
+    private long countMoneyToTransfer;
+    @Autowired
+    private CurrencyConverter currencyConverter;
 
     private AccountService accountService;
 
@@ -48,7 +51,10 @@ public class TransferServiceImpl implements TransferService {
      void transfer(Account target,Account sender){
         sender.setMoney(sender.getMoney() - countMoneyToTransfer); //Withdrawal from the account
         accountService.update(sender);
-        target.setMoney(target.getMoney() + countMoneyToTransfer); //Account replenishment
+            long convertingMoney =  currencyConverter.convert(sender.getCurrency()
+                    ,target.getCurrency()
+                    ,countMoneyToTransfer);
+        target.setMoney(target.getMoney() + convertingMoney); //Account replenishment
         accountService.update(target);
     }
 
@@ -62,6 +68,13 @@ public class TransferServiceImpl implements TransferService {
     }
 
 
+    public CurrencyConverter getCurrencyConverter() {
+        return currencyConverter;
+    }
+
+    public void setCurrencyConverter(CurrencyConverter currencyConverter) {
+        this.currencyConverter = currencyConverter;
+    }
 
     public AccountService getAccountService() {
         return accountService;

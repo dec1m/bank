@@ -44,4 +44,10 @@
         <property name="dao" ref="accountDao"/>
     </bean>
 
+    <bean id="converterCurrency" class="com.trach.bank.utils.CurrencyConverterImpl">
+        <constructor-arg>
+            <bean  class="com.trach.bank.utils.CurrencyСourseProviderTest"/>
+        </constructor-arg>
+    </bean>
+
 </beans>

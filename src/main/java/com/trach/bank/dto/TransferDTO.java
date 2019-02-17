@@ -13,7 +13,7 @@ public class TransferDTO {
 
     private  long idSender;
 
-    private int countMoney;
+    private long countMoney;
 
 
 
@@ -34,11 +34,11 @@ public class TransferDTO {
     }
 
 
-    public int getCountMoney() {
+    public long getCountMoney() {
         return countMoney;
     }
 
-    public void setCountMoney(int countMoney) {
+    public void setCountMoney(long countMoney) {
         this.countMoney = countMoney;
     }
 

@@ -24,10 +24,9 @@ public class AccountController {
     private AccountService accountService;
 
     @RequestMapping(value = "/new/{idClient}", method = RequestMethod.GET)
-    public String addNewAccountPage(Model model, @PathVariable  long idClient,
-                                    HttpSession httpSession){
+    public String addNewAccountPage(Model model, @PathVariable  long idClient){
 
-        httpSession.setAttribute("idClient",idClient);
+
         model.addAttribute("account",new Account());
         model.addAttribute("clientId",idClient);
 
