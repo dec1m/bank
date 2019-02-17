@@ -5,7 +5,7 @@ import com.trach.bank.model.Group;
 import com.trach.bank.services.interfaces.GroupService;
 
 public class GroupServiceImpl implements GroupService {
-    GroupDao groupDao;
+    private GroupDao groupDao;
     @Override
     public Group findGroupByName(String name) {
        return  groupDao.findGroupByName(name);

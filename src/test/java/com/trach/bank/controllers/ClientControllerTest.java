@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -19,16 +20,18 @@ public class ClientControllerTest {
 
     private  ClientController controller;
     private Model model;
-
+    private BindingResult bindingResult;
+    private  Client client;
     @Before
     public void setUp(){
         controller = new ClientController();
         controller.setClientService(mock(ClientService.class));
         model = mock(Model.class);
-        Client client = new Client();
+        bindingResult = mock(BindingResult.class);
+       client = new Client();
         client.setId(1);
         when(controller.getClientService().findById(anyLong())).thenReturn(client);
-
+        when(controller.getClientService().findAll()).thenReturn(new ArrayList<>());
     }
 
 
@@ -90,8 +93,8 @@ public class ClientControllerTest {
         verifyNoMoreInteractions(model);
     }
 
-    @Test public void updateClient_return_value_hasErrors_False_Test(){
-        BindingResult bindingResult = mock(BindingResult.class);
+    @Test public void updateClient_return_value_hasErrors_FALSE_Test(){
+
         when(bindingResult.hasErrors()).thenReturn(false);
         Client client = new Client();
         client.setId(1);
@@ -99,8 +102,8 @@ public class ClientControllerTest {
         String actual = controller.updateClient(client,bindingResult);
         assertEquals(expected,actual);
     }
-    @Test public void updateClient_return_value_hasErrors_True_Test(){
-        BindingResult bindingResult = mock(BindingResult.class);
+    @Test public void updateClient_return_value_hasErrors_TRUE_Test(){
+
         when(bindingResult.hasErrors()).thenReturn(true);
         Client client = new Client();
         String expected =  "/update/" + client.getId();
@@ -109,7 +112,7 @@ public class ClientControllerTest {
     }
 
     @Test public void updateClient_logic_Test(){
-        BindingResult bindingResult = mock(BindingResult.class);
+
         when(bindingResult.hasErrors()).thenReturn(false);
         Client client = new Client();
         controller.updateClient(client,bindingResult);
@@ -118,32 +121,51 @@ public class ClientControllerTest {
         verifyNoMoreInteractions(controller.getClientService());
     }
     @Test
-    @Ignore
     public void getAllClients_return_value_Test(){
-        //todo realise method
+        String expected =  "/clients";
+        String actual = controller.getAllClients(model);
+
+        assertEquals(expected,actual);
     }
 
     @Test
-    @Ignore
     public void getAllClients_logic_Test_(){
-        //todo realise method
+
+
+        controller.getAllClients(model);
+        verify(model).addAttribute(eq("clients"),isA(List.class));
+        verify(controller.getClientService()).findAll();
+        verifyNoMoreInteractions(model);
+        verifyNoMoreInteractions(controller.getClientService());
     }
     @Test
-    @Ignore
-    public void registerClientPage_logic_Test_(){
-        //todo realise method
-    }
-    @Test
-    @Ignore
-    public void registerClient_logic_Test_(){
-        //todo realise method
-    }
-    @Test
-    @Ignore
-    public void registerClient_return_value_Test_(){
-        //todo realise method
+    public void registerClientPage_return_value_Test_(){
+        String expected =  "/register";
+        String actual = controller.registerClientPage(model);
+        assertEquals(expected,actual);
     }
 
+    @Test
+    public void registerClient_return_value_hasErrors_FALSE_Test_(){
+        when(bindingResult.hasErrors()).thenReturn(false);
+        String expected =  "redirect:/clients";
+        String actual = controller.registerClient(client,bindingResult);
+        assertEquals(expected,actual);
+    }
+    @Test
+    public void registerClient_return_value_hasErrors_TRUE_Test_(){
+        when(bindingResult.hasErrors()).thenReturn(true);
+        String expected =  "/register";
+        String actual = controller.registerClient(client,bindingResult);
+        assertEquals(expected,actual);
+    }
+    @Test
+    public void registerClient_logic_Test_(){
+
+        controller.registerClient(client,bindingResult);
+        verify(controller.getClientService()).save(isA(Client.class));
+        verifyNoMoreInteractions(controller.getClientService());
+    }
 
     }
 
