@@ -95,9 +95,9 @@ public class Account  implements Serializable {
     @Override
     public String toString() {
         return "Account{" +
-                "Owner=" + client.getLogin()+
+                "Owner= " + client+
                 "id=" + id +
-                ", money=" + money +
+                ", money= " + money +
                 '}';
     }
 

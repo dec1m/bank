@@ -11,9 +11,9 @@ public class CurrencyConverterImpl implements CurrencyConverter {
 
     @Override
     public long convert(Currency of, Currency at,long count) {
+        if(of.equals(at)) return count;
        long countAtUsd =  convertAtUSD(of, count);
         return (long) (countAtUsd * provider.getCource(at));
-
 
     }
 

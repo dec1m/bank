@@ -3,7 +3,10 @@ package com.trach.bank.services;
 import com.trach.bank.dto.TransferDTO;
 import com.trach.bank.exceptions.transfer.TransferException;
 import com.trach.bank.model.Account;
+import com.trach.bank.model.Currency;
 import com.trach.bank.services.interfaces.AccountService;
+import com.trach.bank.utils.CurrencyConverterImpl;
+import com.trach.bank.utils.CurrencyCourseProviderTest;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -18,9 +21,11 @@ public class TransferServicesTest {
     private Account target;
     private TransferServiceImpl transferService;
     private TransferDTO transferDTO;
-    private int countMoneyToTransfer = 100;
-    private int idSender = 1;
-    private int idTarget = 2;
+    private long countMoneyToTransfer = 131;
+    private long idSender = 1;
+    private long idTarget = 2;
+   private long countSenderMoney = 1000_00;
+   private long countTargetMoney = 0;
 
     @Before
     public void setUp(){
@@ -29,6 +34,7 @@ public class TransferServicesTest {
 
         transferService = new TransferServiceImpl();
         transferService.setAccountService(accountService);
+        transferService.setCurrencyConverter(new CurrencyConverterImpl(new CurrencyCourseProviderTest()));
 
         transferDTO = new TransferDTO();
         transferDTO.setIdTarget(idTarget);
@@ -37,9 +43,13 @@ public class TransferServicesTest {
 
         sender = new Account();
         sender.setId(idSender);
+        sender.setMoney(countSenderMoney);
 
         target =  new Account();
         target.setId(idTarget);
+        target.setMoney(countTargetMoney);
+
+
 
         when(accountService.findById(idSender)).thenReturn(sender);
         when(accountService.findById(idTarget)).thenReturn(target);
@@ -47,16 +57,6 @@ public class TransferServicesTest {
 
     }
 
-    @Test
-    @Ignore
-    public void transfer_logic_Test() throws TransferException {
-        sender.setMoney(150);
-        transferService.transfer(transferDTO);
-        assertEquals(50,sender.getMoney());
-        assertEquals(100,target.getMoney());
-
-
-    }
     @Test(expected = TransferException.class )
     public void transfer_Not_enough_money_in_the_account_Test() throws TransferException {
         sender.setMoney(50);
@@ -86,6 +86,20 @@ public class TransferServicesTest {
 
         transferService.transfer(transferDTO);
 
+
+    }
+    @Test
+    public void transfer_test() throws TransferException {
+        sender.setMoney(countSenderMoney);
+        sender.setCurrency(Currency.USD);
+        target.setCurrency(Currency.USD);
+        target.setMoney(countTargetMoney);
+
+        long expectedSender = countSenderMoney - countMoneyToTransfer * 100;
+        long expectedTarget = countTargetMoney + countMoneyToTransfer * 100;
+        transferService.transfer(transferDTO);
+        assertEquals(expectedSender,sender.getMoney());
+        assertEquals(expectedTarget,target.getMoney());
 
     }
 }

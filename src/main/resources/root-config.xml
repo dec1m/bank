@@ -46,7 +46,7 @@
 
     <bean id="converterCurrency" class="com.trach.bank.utils.CurrencyConverterImpl">
         <constructor-arg>
-            <bean  class="com.trach.bank.utils.CurrencyСourseProviderTest"/>
+            <bean  class="com.trach.bank.utils.CurrencyCourseProviderTest"/>
         </constructor-arg>
     </bean>
 

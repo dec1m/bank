@@ -39,7 +39,7 @@ public class TransferDTO {
     }
 
     public void setCountMoney(long countMoney) {
-        this.countMoney = countMoney;
+        this.countMoney = countMoney * 100; //Cast money  to penny;
     }
 
 
