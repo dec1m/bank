@@ -11,11 +11,11 @@
     </#if>
 
 <form action="/check" method="post">
-    <label for="client_login">Username</label>
+    <label for="client_login"><@spring.message "label_username"/></label>
     <input type="text"  name="client_login"><br/>
-    <label for="client_password">Password</label>
+    <label for="client_password"><@spring.message "label_password"/></label>
     <input type="text"   name="client_password"><br/>
-    <input type="submit"  value="LOGIN!">
+    <input type="submit"  value="<@spring.message "label_enter"/>">
 </form>
 
 </@c.page>

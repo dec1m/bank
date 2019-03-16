@@ -34,16 +34,17 @@
                     <a class="nav-link" href="/client/${id}"><@spring.message "label_my_account"/></span></a>
 
                 </li>
-                <li class="nav-item ">
-                    <a class="nav-link" href="/transfer"><@spring.message "transfers"/></span></a>
 
-                </li>
             <li class="nav-item ">
                 <a class="nav-link" href="/perform_logout"><@spring.message "label_out"/></span></a>
             </li>
             </@security.authorize>
         </ul>
+        <span id="blockLocale">
+            <a href="?lang=ru"><img width="20" height="20" src="../../../img/locale/ru.png" />ru </a>
+            <a href="?lang=en"><img width="20" height="20"  src="../../../img/locale/en.png"/>en </a>
+        </span>
 
-        <div class="navbar-text mr-3">Здравствуйте, ${name}</div>
+        <div class="navbar-text mr-3"><@spring.message "label_welcome"/>, ${name}</div>
     </div>
 </nav>
