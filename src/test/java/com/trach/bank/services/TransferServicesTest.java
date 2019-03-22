@@ -5,10 +5,8 @@ import com.trach.bank.exceptions.transfer.TransferException;
 import com.trach.bank.model.Account;
 import com.trach.bank.model.Currency;
 import com.trach.bank.services.interfaces.AccountService;
-import com.trach.bank.utils.CurrencyConverterImpl;
-import com.trach.bank.utils.CurrencyCourseProviderTest;
+import com.trach.bank.dao.coursProvider.CurrencyCourseProviderTest;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import static junit.framework.TestCase.assertEquals;
 import static org.mockito.Mockito.*;
@@ -34,7 +32,7 @@ public class TransferServicesTest {
 
         transferService = new TransferServiceImpl();
         transferService.setAccountService(accountService);
-        transferService.setCurrencyConverter(new CurrencyConverterImpl(new CurrencyCourseProviderTest()));
+        transferService.setCurrencyConverterService(new CurrencyConverterServiceImpl(new CurrencyCourseProviderTest()));
 
         transferDTO = new TransferDTO();
         transferDTO.setIdTarget(idTarget);

@@ -6,7 +6,7 @@ import com.trach.bank.exceptions.transfer.TransferException;
 import com.trach.bank.model.Account;
 import com.trach.bank.services.interfaces.AccountService;
 import com.trach.bank.services.interfaces.TransferService;
-import com.trach.bank.utils.CurrencyConverter;
+import com.trach.bank.services.interfaces.CurrencyConverterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,7 +15,7 @@ public class TransferServiceImpl implements TransferService {
 
     private long countMoneyToTransfer;
     @Autowired
-    private CurrencyConverter currencyConverter;
+    private CurrencyConverterService currencyConverterService;
 
     private AccountService accountService;
 
@@ -51,7 +51,7 @@ public class TransferServiceImpl implements TransferService {
      void transfer(Account target,Account sender){
         sender.setMoney(sender.getMoney() - countMoneyToTransfer); //Withdrawal from the account
         accountService.update(sender);
-            long convertingMoney =  currencyConverter.convert(sender.getCurrency()
+            long convertingMoney =  currencyConverterService.convert(sender.getCurrency()
                     ,target.getCurrency()
                     ,countMoneyToTransfer);
         target.setMoney(target.getMoney() + convertingMoney); //Account replenishment
@@ -68,12 +68,12 @@ public class TransferServiceImpl implements TransferService {
     }
 
 
-    public CurrencyConverter getCurrencyConverter() {
-        return currencyConverter;
+    public CurrencyConverterService getCurrencyConverterService() {
+        return currencyConverterService;
     }
 
-    public void setCurrencyConverter(CurrencyConverter currencyConverter) {
-        this.currencyConverter = currencyConverter;
+    public void setCurrencyConverterService(CurrencyConverterService currencyConverterService) {
+        this.currencyConverterService = currencyConverterService;
     }
 
     public AccountService getAccountService() {

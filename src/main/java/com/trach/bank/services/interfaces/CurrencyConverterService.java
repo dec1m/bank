@@ -1,7 +1,7 @@
-package com.trach.bank.utils;
+package com.trach.bank.services.interfaces;
 
 import com.trach.bank.model.Currency;
 
-public interface CurrencyConverter {
+public interface CurrencyConverterService {
      long convert(Currency of,Currency at,long count);
 }

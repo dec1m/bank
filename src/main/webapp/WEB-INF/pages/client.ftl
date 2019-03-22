@@ -45,8 +45,9 @@
             <#list accounts as account>
         <tr>
             <td>${account.id}</td>
-            <td>${account.money}</td>
-            <td>${account.currency}</td>
+
+            <td>${(account.money / 100)?string(".00")}</td>
+             <td>${account.currency}</td>
             <td><a href="${rc.getContextPath()}/account/delete/#{account.id}"><@spring.message "label_delete"/> </a></td>
             <td><a href="/transfer/${account.id}"> <@spring.message "label_send"/></a></td>
         </tr>

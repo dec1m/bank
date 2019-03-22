@@ -14,7 +14,7 @@
     <label for="client_login"><@spring.message "label_username"/></label>
     <input type="text"  name="client_login"><br/>
     <label for="client_password"><@spring.message "label_password"/></label>
-    <input type="text"   name="client_password"><br/>
+    <input type="password"   name="client_password"><br/>
     <input type="submit"  value="<@spring.message "label_enter"/>">
 </form>
 

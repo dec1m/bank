@@ -44,10 +44,18 @@
         <property name="dao" ref="accountDao"/>
     </bean>
 
-    <bean id="converterCurrency" class="com.trach.bank.utils.CurrencyConverterImpl">
+    <bean id="converterCurrency" class="com.trach.bank.services.CurrencyConverterServiceImpl">
         <constructor-arg>
-            <bean  class="com.trach.bank.utils.CurrencyCourseProviderTest"/>
+            <bean class="com.trach.bank.dao.coursProvider.CurrencyCourseProviderFixerIO">
+                <constructor-arg name="access_key" value="${access_key}"/>
+                <constructor-arg name="baseUrl" value="${base_url}"/>
+            </bean>
         </constructor-arg>
+    </bean>
+
+
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="classpath:fixer_io.properties"/>
     </bean>
 
 </beans>
